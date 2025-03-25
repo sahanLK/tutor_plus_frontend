@@ -2,11 +2,12 @@ import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 
 const inter = Inter({
     subsets: ["latin"],
-    variable: "--font-inter", // Optional CSS variable
+    variable: "--font-inter",
 });
 
 
@@ -23,6 +24,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <div className="content-inner top-3 mt-20">
             {children}
         </div>
+        <Footer/>
         </body>
         </html>
     );

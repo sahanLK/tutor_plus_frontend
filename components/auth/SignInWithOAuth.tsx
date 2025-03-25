@@ -1,14 +1,20 @@
+'use client';
 import styles from "./SignInWithOAuth.module.css";
 import React from "react";
 
+type Props = {
+    title: string;
+    provider: string;
+    redirect: (provider: string) => void;
+};
 
-const SignInWithOAuth: React.FC<{ title: string, provider: string }> = (props) => {
+const SignInWithOAuth: React.FC<Props> = ({title, provider, redirect}) => {
     return (
-        <button className={`${styles.gsiMaterialButton} my-1`}>
+        <button className={`${styles.gsiMaterialButton} my-1`} onClick={() => redirect(provider)}>
             <div className={styles.gsiMaterialButtonState}></div>
             <div className={styles.gsiMaterialButtonContentWrapper}>
                 <div className={styles.gsiMaterialButtonIcon}>
-                    {props.provider === 'google' && (
+                    {provider === 'google' && (
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
                              xmlnsXlink="http://www.w3.org/1999/xlink" style={{display: 'block'}}>
                             <path fill="#EA4335"
@@ -23,7 +29,7 @@ const SignInWithOAuth: React.FC<{ title: string, provider: string }> = (props) =
                         </svg>
                     )}
 
-                    {props.provider === 'linkedin' && (
+                    {provider === 'linkedin' && (
                         <svg fill="#3671bf" version="1.1" xmlns="http://www.w3.org/2000/svg"
                              xmlnsXlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 512 512"
                              xmlSpace="preserve" stroke="#3671bf">
@@ -37,7 +43,7 @@ const SignInWithOAuth: React.FC<{ title: string, provider: string }> = (props) =
                         </svg>
                     )}
                 </div>
-                <span className={styles.gsiMaterialButtonContents}>{props.title}</span>
+                <span className={styles.gsiMaterialButtonContents}>{title}</span>
                 <span style={{display: 'none'}}>Sign in with Google</span>
             </div>
         </button>
