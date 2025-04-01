@@ -1,18 +1,23 @@
 'use client';
 
 import {useRouter} from "next/navigation";
-import {ReactNode, useEffect} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@/lib/store/store";
 
-export default function AuthGuard({children}: {children: ReactNode}) {
-    const loggedIn = useSelector((state: RootState) => state.loggedIn).loggedIn;
-    const router = useRouter();
+export default function AuthGuard(Component: any) {
+    return function ProtectedRoute(props: any) {
+        const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
+        const router = useRouter();
+        const [shouldRender, setShouldRender] = useState(false);
 
-    useEffect(() => {
-        if (!loggedIn) {
-            router.push("/auth/login");
-        }
-    }, []);
-    return children;
+        useEffect(() => {
+            if (!loggedIn) {
+                router.push("/auth/login");
+            } else {
+                setShouldRender(true);
+            }
+        }, []);
+        return shouldRender ? <Component {...props} /> : null;
+    }
 }

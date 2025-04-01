@@ -1,8 +1,13 @@
-"use client"; // This component must run on the client side
+"use client";
 
 import { Provider } from "react-redux";
-import { store } from "./store";
+import {persister, store} from "./store";
+import {PersistGate} from "redux-persist/integration/react";
+import React from "react";
 
 export default function ReduxProvider({ children }: { children: React.ReactNode }) {
-    return <Provider store={store}>{children}</Provider>;
+    return (
+        <Provider store={store}>
+            <PersistGate persistor={persister}>{children}</PersistGate>
+        </Provider>);
 }

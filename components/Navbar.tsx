@@ -9,7 +9,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "@/lib/store/store";
 
 const Navbar = () => {
-    const loggedIn = useSelector((state: RootState) => state.loggedIn).loggedIn;
+    const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
     console.log("Auth State: ", loggedIn);
 
     const [isOpen, setIsOpen] = useState(false);

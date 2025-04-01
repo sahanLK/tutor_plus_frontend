@@ -1,11 +1,14 @@
+'use client';
 import AuthGuard from "@/components/AuthGuard";
 
-export default function DashBoard() {
+const DashBoard = () => {
+    // await new Promise((res) => setTimeout(res, 2000));
+
     return (
-        <AuthGuard>
-            <div>
-                <h2>Dashboard</h2>
-            </div>
-        </AuthGuard>
+        <div>
+            <h2>Dashboard</h2>
+        </div>
     )
 }
+
+export default AuthGuard(DashBoard);

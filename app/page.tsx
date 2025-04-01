@@ -1,5 +1,7 @@
+'use client';
+import Redirector from "@/components/Redirector";
 
-export default function HomePage() {
+const HomePage = () => {
     return (
         <div className="min-h-screen bg-gray-100 text-gray-900">
             {/* Hero Section */}
@@ -57,3 +59,5 @@ export default function HomePage() {
         </div>
     );
 }
+
+export default Redirector(HomePage);

@@ -1,5 +1,4 @@
 'use client';
-
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {useDispatch} from "react-redux";
@@ -9,13 +8,13 @@ import {setLoggedOut} from "@/lib/store/authSlice";
 export default function LogoutPage() {
     const dispatch = useDispatch();
     const router = useRouter();
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        setLoading(true);
+        // setLoading(true);
         fetch('http://localhost:8000/users/logout', {
             credentials: 'include',
             headers: {
@@ -27,7 +26,7 @@ export default function LogoutPage() {
                 console.log(res);
                 localStorage.removeItem('access_token');
                 dispatch(setLoggedOut());
-                setLoading(false);
+                // setLoading(false);
                 router.push('/auth/login');
             }
         }).catch(err => {
@@ -39,6 +38,7 @@ export default function LogoutPage() {
     }, []);
 
     return (
-        <div>{loading ? 'Logging Out': 'Logout Success'}</div>
+        // <div>{loading ? 'Logging Out': 'Logout Success'}</div>
+        <div>Some</div>
     )
 }
