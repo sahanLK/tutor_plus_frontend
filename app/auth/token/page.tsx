@@ -1,14 +1,26 @@
 'use client';
 
 import {useSearchParams} from "next/navigation";
+import {useEffect} from "react";
 
 export default function Token() {
     const searchParams = useSearchParams();
-    console.log(searchParams);
-    console.log("Access Token: ", searchParams.get("access_token"));
-    // const searchParams = request.nextUrl.searchParams;
-    // const query = searchParams.get('query');
-    // console.log(searchParams);
-    // console.log(query);
-    // query is "hello" for /api/search?query=hello
+    const authorizationCode = searchParams.get('auth');
+    const state = searchParams.get('state');
+
+    useEffect(() => {
+        fetch('http://localhost:8000/auth/google/auth/exchange', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                auth_code: authorizationCode,
+                state: state,
+            })
+        }).then(res => {
+            return res.json();
+        }).then(data => {
+            console.log(data);
+        });
+    }, [authorizationCode, state]);
+
 }

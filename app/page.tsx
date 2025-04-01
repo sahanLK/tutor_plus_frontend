@@ -1,29 +1,5 @@
-'use client';
-// import {useEffect} from "react";
-// import { useRouter } from "next/router";
-// import Cookies from "js-cookie";
-
-
 
 export default function HomePage() {
-
-    // useEffect(() => {
-    //     const token = Cookies.get("access_token");
-    //     console.log("TOKEN: ", token);
-    //     console.log("ALL COOKIES: ", Cookies);
-    //
-    //     if (token) {
-    //         // Store the token in localStorage for future API requests
-    //         localStorage.setItem("authToken", token);
-    //
-    //         // Redirect the user to a protected route
-    //         // Router.push("/dashboard");
-    //     } else {
-    //         console.log("No auth_token cookie found");
-    //     }
-    // }, []);
-
-
     return (
         <div className="min-h-screen bg-gray-100 text-gray-900">
             {/* Hero Section */}

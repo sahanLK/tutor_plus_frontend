@@ -5,8 +5,13 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
+import {useSelector} from "react-redux";
+import {RootState} from "@/lib/store/store";
 
 const Navbar = () => {
+    const loggedIn = useSelector((state: RootState) => state.loggedIn).loggedIn;
+    console.log("Auth State: ", loggedIn);
+
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -20,8 +25,15 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-6 tracking-normal text-stone-800">
-                        <Link href="/auth/login" className="rounded-full mr-8 py-2">Login</Link>
-                        <Link href="/auth/register" className="text-white bg-blue-600 rounded-full px-5 py-2 hover:bg-blue-900">Sign Up</Link>
+                        {loggedIn ? (
+                            <Link href="/auth/logout" className="rounded-full mr-8 py-2">Logout</Link>
+                        ): (
+                            <>
+                            <Link href="/auth/login" className="rounded-full mr-8 py-2">Login</Link>
+                            <Link href="/auth/register" className="text-white bg-blue-600 rounded-full px-5 py-2 hover:bg-blue-900">Sign Up</Link>
+                            </>
+                        )}
+
                     </div>
 
                     {/* Mobile Menu Button */}
