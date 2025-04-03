@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import React from "react";
 import ReduxProvider from "@/lib/store/ReduxProvider";
+import styles from "./page.module.css";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -20,10 +21,10 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html lang="en">
-        <body className={`${inter.variable} max-w-screen mx-auto`}>
+        <body className={`${inter.variable} max-w-screen mx-auto bg-gray-100`}>
         <ReduxProvider>
         <Navbar/>
-        <div className="content-inner top-3 mt-20 py-12 min-h-screen">
+        <div className="content-inner">
             {children}
         </div>
         </ReduxProvider>

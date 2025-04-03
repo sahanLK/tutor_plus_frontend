@@ -15,7 +15,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="fixed top-0 left-0 w-full shadow-md">
+        <nav className="sticky top-0 left-0 w-full bg-gray-100">
             <div className="mx-auto px-4 sm:px-6 lg:px-8 py-1">
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
@@ -26,14 +26,16 @@ const Navbar = () => {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-6 tracking-normal text-stone-800">
                         {loggedIn ? (
+                            <>
                             <Link href="/auth/logout" className="rounded-full mr-8 py-2">Logout</Link>
+                            <Link href="/profile" className="rounded-full mr-8 py-2">Profile</Link>
+                            </>
                         ): (
                             <>
                             <Link href="/auth/login" className="rounded-full mr-8 py-2">Login</Link>
                             <Link href="/auth/register" className="text-white bg-blue-600 rounded-full px-5 py-2 hover:bg-blue-900">Sign Up</Link>
                             </>
                         )}
-
                     </div>
 
                     {/* Mobile Menu Button */}

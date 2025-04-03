@@ -14,7 +14,7 @@ export default function Redirector(Component: any) {
             if (loggedIn) {
                 router.replace("/dashboard");  // Use replace() to avoid back button issues
             } else {
-                setShouldRender(true);  // Only render if user is NOT logged in
+                setShouldRender(true);  // Only render if profile is NOT logged in
             }
         }, [loggedIn]);
 

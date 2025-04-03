@@ -16,8 +16,8 @@ const RegisterPage = () => {
         last_name: "",
     });
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    // const [loading, setLoading] = useState(false);
+    // const [error, setError] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({...formData, [e.target.name]: e.target.value});
@@ -69,7 +69,7 @@ const RegisterPage = () => {
     }
 
     return (
-        <div className="w-full max-w-md bg-white mx-auto p-8 shadow-lg rounded-lg">
+        <div className="w-full max-w-md bg-white mx-auto my-16 p-8 shadow-lg rounded-lg">
             <h2 className="text-2xl font-bold mb-6 text-center">Create an Account</h2>
 
             <div className="grid grid-cols-3 gap-1 mb-10 mt-10">

@@ -3,7 +3,6 @@ import styles from "./page.module.css";
 import SignInWithOAuth from "@/components/auth/SignInWithOAuth";
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
-import Spinner from "@/components/spinner/Spinner";
 import {setLoggedIn} from "@/lib/store/authSlice";
 import {useDispatch} from "react-redux";
 
@@ -61,7 +60,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="w-full max-w-md bg-white mx-auto p-8 shadow-lg rounded-lg">
+        <div className="w-full max-w-md bg-white mx-auto my-16 p-8 shadow-lg rounded-lg">
             <h2 className="text-2xl font-bold text-center mb-10">Sign In</h2>
 
             {error !== '' ? <>{error}</>: ''}
