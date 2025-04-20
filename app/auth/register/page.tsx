@@ -16,7 +16,7 @@ const RegisterPage = () => {
         last_name: "",
     });
 
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +61,7 @@ const RegisterPage = () => {
         window.location.href = url;
     }
 
-    function checkPassword(e) {
+    function checkPassword(e: React.ChangeEvent<HTMLInputElement>) {
         console.log(e.target.value);
         if (formData.email !== e.target.value) {
             setError("Passwords don't match");
@@ -77,6 +77,7 @@ const RegisterPage = () => {
                 <div className="h-[3px] bg-green-500"></div>
                 <div className="h-[3px] bg-green-500"></div>
             </div>
+            {error}
 
             <form className="space-y-2" onSubmit={handleSubmit}>
                 {/* Step 1: Email */}
@@ -91,11 +92,11 @@ const RegisterPage = () => {
                             value={formData.email}
                             onChange={handleChange}
                         />
-                        I'm a:
-                        <select onSelect={handleChange}>
+                        I&apos;m a:
+                        {/* <select onSelect={handleChange}>
                             <option name="role">Teacher</option>
                             <option name="role">Student</option>
-                        </select>
+                        </select> */}
                     </>
                 )}
 
@@ -108,7 +109,7 @@ const RegisterPage = () => {
                             placeholder="Enter Email"
                             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                             name="firstName"
-                            value={formData.firstName}
+                            value={formData.first_name}
                             onChange={handleChange}
                         />
 
@@ -118,7 +119,7 @@ const RegisterPage = () => {
                             placeholder="Enter Last Name"
                             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                             name="lastName"
-                            value={formData.lastName}
+                            value={formData.last_name}
                             onChange={handleChange}
                         />
                     </>

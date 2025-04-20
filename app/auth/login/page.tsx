@@ -3,7 +3,6 @@ import styles from "./page.module.css";
 import SignInWithOAuth from "@/components/auth/SignInWithOAuth";
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
-import Spinner from "@/components/spinner/Spinner";
 import {setLoggedIn} from "@/lib/store/authSlice";
 import {useDispatch} from "react-redux";
 
@@ -42,9 +41,12 @@ export default function LoginPage() {
             dispatch(setLoggedIn());
             router.push('/dashboard');
 
-        } catch (e: any) {
-            console.log("Error notice");
-            setError(e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                setError(e.message);
+            } else {
+                setError('Unknown error');
+            }
         } finally {
             setLoading(false);
         }
