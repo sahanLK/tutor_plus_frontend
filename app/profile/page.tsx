@@ -49,13 +49,13 @@ export default function TeacherProfile() {
                 <h2 className="text-xl font-semibold text-gray-900">Student Reviews</h2>
                 <div className="mt-4 space-y-4">
                     <div className="bg-gray-100 p-4 rounded-lg">
-                        <p className="text-gray-700"><strong>Alice:</strong> &quot;John is an amazing tutor! He makes learning so much fun.&quot;</p>
+                        <p className="text-gray-700"><strong>Alice:</strong> "John is an amazing tutor! He makes learning so much fun."</p>
                         <div className="flex text-yellow-500 mt-1">
                             {[...Array(5)].map((_, i) => <FaStar key={i} />)}
                         </div>
                     </div>
                     <div className="bg-gray-100 p-4 rounded-lg">
-                        <p className="text-gray-700"><strong>Bob:</strong> Helped me a lot with calculus. Highly recommend!</p>
+                        <p className="text-gray-700"><strong>Bob:</strong> "Helped me a lot with calculus. Highly recommend!"</p>
                         <div className="flex text-yellow-500 mt-1">
                             {[...Array(4)].map((_, i) => <FaStar key={i} />)}
                             <FaStarHalfAlt />

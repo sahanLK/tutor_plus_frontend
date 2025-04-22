@@ -1,61 +1,77 @@
 'use client';
 import Redirector from "@/components/Redirector";
+import styles from "./page.module.css";
+import Image from "next/image";
+import bannerImg from "@/public/homepage/banner.png";
+import boy from "@/public/homepage/boy.png";
+import { useEffect } from "react";
+import Course from "@/components/courses/Course";
+
 
 const HomePage = () => {
+    const featuredCourses = [
+        {'title': 'Beginner Adobe Illustrator for Graphic Design'}
+    ]
+
     return (
-        <div className="min-h-screen bg-gray-100 text-gray-900">
-            {/* Hero Section */}
-            <section className="relative h-[500px] flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-                <h1 className="text-5xl font-bold mb-4">Find the Best Tutors Online</h1>
-                <p className="text-lg mb-6">Connect with expert teachers in any subject, anywhere in the world.</p>
-                <button className="bg-white text-blue-600 px-6 py-3 text-lg font-semibold rounded-lg shadow-lg">Get Started</button>
-            </section>
-
-            {/* Features Section */}
-            <section className="py-20 px-6 max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-                <div className="bg-white shadow-md rounded-lg overflow-hidden border p-6 flex flex-col items-center">
-                    <svg className="w-12 h-12 text-blue-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16l-4-4m0 0l4-4m-4 4h16" /></svg>
-                    <h2 className="text-xl font-semibold">Easy Search</h2>
-                    <p className="text-gray-600 text-center">Find tutors based on subjects, experience, and reviews.</p>
-                </div>
-
-                <div className="bg-white shadow-md rounded-lg overflow-hidden border p-6 flex flex-col items-center">
-                    <svg className="w-12 h-12 text-purple-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12l4-4m0 0l-4-4m4 4H4" /></svg>
-                    <h2 className="text-xl font-semibold">Top Tutors</h2>
-                    <p className="text-gray-600 text-center">Learn from highly rated and experienced teachers.</p>
-                </div>
-
-                <div className="bg-white shadow-md rounded-lg overflow-hidden border p-6 flex flex-col items-center">
-                    <svg className="w-12 h-12 text-green-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-                    <h2 className="text-xl font-semibold">Global Reach</h2>
-                    <p className="text-gray-600 text-center">Access top tutors from anywhere in the world.</p>
-                </div>
-            </section>
-
-            {/* Stats Section */}
-            <section className="py-20 bg-purple-100 text-gray-900 text-center">
-                <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-                    <div>
-                        <h2 className="text-4xl font-bold text-blue-600">#1</h2>
-                        <p className="mt-2">In online tutoring for students worldwide.</p>
-                    </div>
-                    <div>
-                        <h2 className="text-4xl font-bold text-purple-600">99.99%</h2>
-                        <p className="mt-2">Positive feedback from satisfied learners.</p>
-                    </div>
-                    <div>
-                        <h2 className="text-4xl font-bold text-green-600">600k+</h2>
-                        <p className="mt-2">Students learning with us globally.</p>
+        <div>
+            <section className={`${styles.headerHome} h-screen`}>
+                <div className="container mx-auto px-10 py-5 flex items-center h-screen">
+                    <div className="grid grid-cols-2 mb-50">
+                        <div className="my-auto">
+                            <h2 className="text-6xl font-bold space-y-3 text-stone-700 tracking-sm leading-tight">
+                                Top  <span className="text-yellow-600">Instructors</span>  From<br/> All Around the World.
+                            </h2>
+                            <p className="mt-8 mb-16 leading-7 text-stone-600">
+                                Connecting Teachers and Students from all around the world, while integrating, <br/>
+                                everything you need for a seamless online Tutoring and Learning experience.
+                            </p>
+                            <a className="bg-blue-800 px-6 py-4 text-white tracking-wide">Get Started for Free</a>
+                        </div>
+                        <div className="mx-au">
+                            <Image src={bannerImg} alt="bannner" className="h-auto" aria-hidden={true} />
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Call to Action Section */}
-            <section className="py-20 bg-blue-600 text-white text-center">
-                <h2 className="text-3xl font-bold">Start Learning Today!</h2>
-                <p className="mt-4 text-lg">Join thousands of students and find the perfect tutor for your needs.</p>
-                <button className="mt-6 bg-white text-blue-600 px-6 py-3 text-lg font-semibold rounded-lg shadow-lg">Sign Up Now</button>
+            <section className="container mx-auto bg-gray-100 border-t-1 py-18 border-gray-300">
+                <div className="grid grid-cols-2 py-10">
+                    <div className="ml-auto px-16">
+                        <Image src={boy} alt="boy"/>
+                    </div>
+                    <div className="">
+                        <label className="text-blue-600 bg-blue-100 text-sm px-4 py-2">Looking for a Tutor?</label>
+                        <h2 className="text-3xl font-bold text-stone-700 mt-4 mb-4">
+                            Discover All Around the World in Seconds<br/>
+                        </h2>
+                        <p className="text-stone-600 mb-15">
+                            Search for talented, Top-Rated instructors, for your unique situation and needs.
+                        </p>
+                        <a className="bg-blue-800 px-8 py-4 text-white tracking-wide rounded">Find Your Tutor</a>
+                    </div>
+                </div>
             </section>
+
+            <section className="container mx-auto bg-gray-100 my-10 rounded-lg">
+                <h2 className="text-3xl font-bold text-stone-700 mt-10 mb-8">Featured Courses</h2>
+                <div className="flex gap-5 flex-wrap gap-y-10 mb-10">
+                    <Course/>
+                    <Course/>
+                    <Course/>
+                    <Course/>
+                    <Course/>
+                </div>
+            </section>
+
+            {/* <section className="container mx-auto bg-blue-700 p-10 text-white rounded-lg shadow-lg text-center py-14">
+                <div>
+                    <p>Receive huge benefits with our lifetime Plumbing Receive huge benefits with our lifetime Plumbing email address will be shown</p>
+                </div>
+                <div className="mt-16">
+                    <a className="bg-white rounded text-stone-700 py-4 px-6 text-sm">BECOME AN INSTRUCTOR</a>
+                </div>
+            </section> */}
         </div>
     );
 }
