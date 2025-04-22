@@ -16,7 +16,7 @@ const Navbar = () => {
 
     return (
         <nav className="sticky top-0 left-0 w-full bg-gray-100">
-            <div className="mx-auto px-4 sm:px-6 lg:px-8 py-1">
+            <div className="max-w-10/12 mx-auto px-4 sm:px-6 lg:px-8 py-1">
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
                     <div className="text-2xl font-bold text-gray-800">
@@ -32,8 +32,8 @@ const Navbar = () => {
                             </>
                         ): (
                             <>
-                            <Link href="/auth/login" className="rounded-full mr-8 py-2">Login</Link>
-                            <Link href="/auth/register" className="text-white bg-blue-600 rounded-full px-5 py-2 hover:bg-blue-900">Sign Up</Link>
+                            <Link href="/auth/login" className="rounded border-1 border-gray-300 mr-5 px-7 py-3 bg-white text-sm">Login</Link>
+                            <Link href="/auth/register" className="text-white bg-blue-600 rounded px-7 py-3 hover:bg-blue-900 text-sm font-bold">Sign Up</Link>
                             </>
                         )}
                     </div>
