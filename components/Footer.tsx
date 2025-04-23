@@ -2,7 +2,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaGithub, FaLinkedin, FaYoutube } f
 
 export default function Footer() {
     return (
-        <footer className="bg-blue-950 text-gray-300 pt-18 pb-10 mt-20">
+        <footer className="bg-blue-950 text-gray-300 pt-18 pb-10">
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-sm">
 
                 {/* Resources */}
