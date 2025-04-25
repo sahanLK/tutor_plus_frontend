@@ -83,7 +83,7 @@ const Navbar = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/profile" className="flex items-center px-4 py-2 hover:bg-gray-100">
+                                <Link href="/auth/logout" className="flex items-center px-4 py-2 hover:bg-gray-100">
                                     <RiShutDownLine className="mr-3" size="18" />
                                     <span className="text-sm">Logout</span>
                                 </Link>
