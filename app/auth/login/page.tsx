@@ -5,6 +5,7 @@ import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import {setLoggedIn} from "@/lib/store/authSlice";
 import {useDispatch} from "react-redux";
+import { setActiveRole } from "@/lib/store/UiConfigSlice";
 
 export default function LoginPage() {
     const dispatch = useDispatch();
@@ -38,6 +39,7 @@ export default function LoginPage() {
             const data = await response.json();
             console.log(data);
             localStorage.setItem('access_token', data.access_token);
+            dispatch(setActiveRole({activeRole: data.active_role}));
             dispatch(setLoggedIn());
             router.push('/dashboard');
 

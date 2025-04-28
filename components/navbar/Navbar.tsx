@@ -5,19 +5,28 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/store/store";
 import { FaRegBell } from "react-icons/fa";
-import { MdBrightness6 } from "react-icons/md";
+import { MdBrightness6, MdOutlineLocalGroceryStore } from "react-icons/md";
 
 import { CgProfile } from "react-icons/cg";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiShutDownLine } from "react-icons/ri";
 import ToggleSwitch from "./ToggleSwitch";
+import api from "@/lib/axios/axios";
+import { AxiosError} from "axios";
+import { setActiveRole } from "@/lib/store/UiConfigSlice";
+import { useRouter } from "next/navigation";
+import PostJobModal from "../modals/PostJobModal";
 
 
 const Navbar = () => {
     const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
+    const activeRole = useSelector((state: RootState) => state.config.activeRole);
+    const dispatch = useDispatch<AppDispatch>();
+    const router = useRouter();
+
     console.log("Auth State: ", loggedIn);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -38,10 +47,34 @@ const Navbar = () => {
         };
     }, []);
 
+    async function toggleActiveRole() {
+        const newRole = (activeRole === "student") ? 'teacher' : 'student';
+
+        try {
+            const resp = await api.get(`/users/change-role?role=${newRole}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                },
+            });
+
+            dispatch(setActiveRole({activeRole: newRole}));
+            console.log(resp);
+            
+            const data = await resp.data;
+            console.log(data);
+            localStorage.setItem('access_token', data.access_token)
+        } catch (err) {
+            const error = err as AxiosError;
+            console.log("Something Bad Happened: ", error);
+            router.push("/auth/login");
+        }
+    }
+
     return (
         <nav className="sticky top-0 left-0 w-full bg-gray-100 shadow">
             <div className="w-full mx-auto  py-1">
                 <div className="flex justify-between h-16 items-center">
+
                     {/* Logo */}
                     <div className="text-2xl font-bold text-gray-800">
                         <Link href="/"><Image src={Logo} alt="Logo" width={150} height={80} /></Link>
@@ -49,11 +82,17 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-8 tracking-normal text-stone-800">
-                        <Link href="/jobs" className="mr-20 py-2 my-auto px-5 bg-blue-700 rounded text-white">Find Jobs</Link>
+                        {activeRole == 'teacher' ? (
+                            <Link href="/jobs" className="mr-20 py-2 my-auto px-5 bg-blue-700 rounded text-white">Find Jobs</Link>
+                        ) : (
+                            <Link href="/jobs/new" className="mr-20 py-2 my-auto px-5 bg-blue-700 rounded text-white">Post a Job</Link>
+                        )}
+                        
                         {loggedIn ? (
                             <>
                                 <a className="my-auto"><MdBrightness6 className="text-stone-700" size={20} /></a>
                                 <a className="my-auto"><FaRegBell className="text-stone-700" size={20} /></a>
+                                <a className="my-auto"><MdOutlineLocalGroceryStore className="text-stone-700" size={22} /></a>
                                 <button className="my-auto ml-2" onClick={() => setMenuOpen(!menuOpen)}>
                                     <Image src="/avatar.png" alt="profile" width={50} height={50} />
                                 </button>
@@ -92,8 +131,7 @@ const Navbar = () => {
 
                             <li className="mt-5 mb-1">
                                 <div className="flex items-center">
-                                    <span className="text-sm px-4">Teacher </span>
-                                    <ToggleSwitch />
+                                    <span className="text-sm px-4 cursor-pointer" onClick={toggleActiveRole}>{activeRole} View</span>
                                 </div>
                             </li>
                         </ul>

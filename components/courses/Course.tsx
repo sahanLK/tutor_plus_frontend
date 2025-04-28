@@ -10,26 +10,20 @@ export default function Course() {
             <div className="p-4">
                 <div className="flex items-center text-gray-500 text-sm space-x-4 mb-2">
                     <div className="flex items-center space-x-1">
-                        <svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2"
-                            viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round"
-                                d="M9 12l2 2 4-4m1 9H5a2 2 0 01-2-2V7a2 2 0 012-2h7l5 5v9a2 2 0 01-2 2z" />
+                        <svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m1 9H5a2 2 0 01-2-2V7a2 2 0 012-2h7l5 5v9a2 2 0 01-2 2z" />
                         </svg>
                         <span>6 Lessons</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                        <svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2"
-                            viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round"
-                                d="M12 8v4l3 3m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span>12h 30m</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                        <svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2"
-                            viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round"
-                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M9 20H4v-2a3 3 0 015.356-1.857M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <svg className="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M9 20H4v-2a3 3 0 015.356-1.857M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         <span>285 Students</span>
                     </div>
