@@ -1,77 +1,18 @@
 'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/lib/store/store";
-import { FaRegBell } from "react-icons/fa";
-import { MdBrightness6, MdOutlineLocalGroceryStore } from "react-icons/md";
-
-import { CgProfile } from "react-icons/cg";
-import { IoSettingsOutline } from "react-icons/io5";
-import { RiShutDownLine } from "react-icons/ri";
-import ToggleSwitch from "./ToggleSwitch";
-import api from "@/lib/axios/axios";
-import { AxiosError} from "axios";
-import { setActiveRole } from "@/lib/store/UiConfigSlice";
-import { useRouter } from "next/navigation";
-import PostJobModal from "../modals/PostJobModal";
+import Menu from "./Menu";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store/store";
 
 
 const Navbar = () => {
-    const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
     const activeRole = useSelector((state: RootState) => state.config.activeRole);
-    const dispatch = useDispatch<AppDispatch>();
-    const router = useRouter();
-
-    console.log("Auth State: ", loggedIn);
-    const [isOpen, setIsOpen] = useState(false);
-
-    const [menuOpen, setMenuOpen] = useState(false);
-    const dropdownRef = useRef(null);
-
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setMenuOpen(false);
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        // Cleanup function
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
-    async function toggleActiveRole() {
-        const newRole = (activeRole === "student") ? 'teacher' : 'student';
-
-        try {
-            const resp = await api.get(`/users/change-role?role=${newRole}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                },
-            });
-
-            dispatch(setActiveRole({activeRole: newRole}));
-            console.log(resp);
-            
-            const data = await resp.data;
-            console.log(data);
-            localStorage.setItem('access_token', data.access_token)
-        } catch (err) {
-            const error = err as AxiosError;
-            console.log("Something Bad Happened: ", error);
-            router.push("/auth/login");
-        }
-    }
-
+    
     return (
-        <nav className="sticky top-0 left-0 w-full bg-gray-100 shadow">
+        <nav className="sticky top-0 left-0 w-full px-5 bg-gray-100 shadow">
             <div className="w-full mx-auto  py-1">
                 <div className="flex justify-between h-16 items-center">
 
@@ -87,72 +28,28 @@ const Navbar = () => {
                         ) : (
                             <Link href="/jobs/new" className="mr-20 py-2 my-auto px-5 bg-blue-700 rounded text-white">Post a Job</Link>
                         )}
-                        
-                        {loggedIn ? (
-                            <>
-                                <a className="my-auto"><MdBrightness6 className="text-stone-700" size={20} /></a>
-                                <a className="my-auto"><FaRegBell className="text-stone-700" size={20} /></a>
-                                <a className="my-auto"><MdOutlineLocalGroceryStore className="text-stone-700" size={22} /></a>
-                                <button className="my-auto ml-2" onClick={() => setMenuOpen(!menuOpen)}>
-                                    <Image src="/avatar.png" alt="profile" width={50} height={50} />
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <Link href="/auth/login" className="rounded border-1 border-gray-300 mr-5 px-7 py-3 bg-white text-sm">Login</Link>
-                                <Link href="/auth/register" className="text-white bg-blue-600 rounded px-7 py-3 hover:bg-blue-900 text-sm font-bold">Sign Up</Link>
-                            </>
-                        )}
+
+                        <Menu/>
                     </div>
 
-                    {menuOpen && (
-                        <ul className="dropdown-menu absolute right-5 mt-75 py-3 w-55 bg-white border border-gray-200 text-stone-600 rounded-md shadow-lg z-10" ref={dropdownRef}>
-                            <li>
-                                <Link href="/profile" className="flex items-center px-4 py-2 hover:bg-gray-100">
-                                    <CgProfile className="mr-3" size="18" />
-                                    <span className="text-sm">Profile</span>
-                                </Link>
-                            </li>
-                            <hr className="text-stone-300 my-2"/>
-
-                            <li>
-                                <Link href="/profile" className="flex items-center px-4 py-2 hover:bg-gray-100">
-                                    <IoSettingsOutline className="mr-3" size="18" />
-                                    <span className="text-sm">Settings</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/auth/logout" className="flex items-center px-4 py-2 hover:bg-gray-100">
-                                    <RiShutDownLine className="mr-3" size="18" />
-                                    <span className="text-sm">Logout</span>
-                                </Link>
-                            </li>
-                            <hr className="text-stone-300 my-2"/>
-
-                            <li className="mt-5 mb-1">
-                                <div className="flex items-center">
-                                    <span className="text-sm px-4 cursor-pointer" onClick={toggleActiveRole}>{activeRole} View</span>
-                                </div>
-                            </li>
-                        </ul>
-                    )}
+                    
 
                     {/* Mobile Menu Button */}
-                    <div className="md:hidden">
+                    {/* <div className="md:hidden">
                         <button onClick={() => setIsOpen(prev => !prev)} className="text-gray-700 dark:text-gray-300 focus:outline-none">
                             {isOpen ? <X size={28} /> : <Menu size={28} />}
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
             {/* Mobile Menu */}
-            {isOpen && (
+            {/* {isOpen && (
                 <div className="md:hidden shadow-md p-4">
                     <Link href="#" className="block text-gray-700 dark:text-gray-300 hover:text-blue-500 py-2">Login</Link>
                     <Link href="#" className="block text-gray-700 dark:text-gray-300 hover:text-blue-500 py-2">Sign Up</Link>
                 </div>
-            )}
+            )} */}
         </nav>
     );
 };

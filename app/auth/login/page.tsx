@@ -1,4 +1,5 @@
 'use client';
+
 import styles from "./page.module.css";
 import SignInWithOAuth from "@/components/auth/SignInWithOAuth";
 import React, {useState} from "react";
@@ -38,9 +39,8 @@ export default function LoginPage() {
 
             const data = await response.json();
             console.log(data);
-            localStorage.setItem('access_token', data.access_token);
             dispatch(setActiveRole({activeRole: data.active_role}));
-            dispatch(setLoggedIn());
+            dispatch(setLoggedIn({access_token: data.access_token}));
             router.push('/dashboard');
 
         } catch (e: any) {

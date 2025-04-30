@@ -10,7 +10,7 @@ export default function CreateJobPage() {
         content: "",
     });
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
@@ -32,16 +32,26 @@ export default function CreateJobPage() {
     }
 
     return (
-        <div className="container mx-auto min-h-screen mt-20">
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="container mx-auto min-h-screen mt-14">
+            <h1 className="text-2xl text-stone-700 my-10">Let's find the best tutor for You.</h1>
+
+            <form onSubmit={handleSubmit} className="space-y-4 max-w-3xl">
                 <input
                     type="text" placeholder="Title" name="title" onChange={handleChange}
-                    className="block border-1 border-stone-400 py-1 px-3"
+                    className="block border-1 border-stone-400 py-2 px-3 w-full rounded"
                 />
-                <input
-                    type="textarea" placeholder="Describe your requirements" name="content" onChange={handleChange}
-                    className="block border-1 border-stone-400 py-1 px-3"
+
+                <h1 className="mt-10 text-lg text-stone-700">Describe Your Unique Requirements</h1>
+                <textarea
+                    placeholder="I'm looking for ..."
+                    name="content"
+                    value={formData.content}
+                    onChange={handleChange}
+                    rows={6}
+                    className="block border-1 border-stone-400 py-2 px-3 w-full rounded"
                 />
+
+                <h1></h1>
                 <input 
                     type="submit" value="Post Job" 
                     className="px-4 py-1 bg-blue-700 text-white mt-5 cursor-pointer"

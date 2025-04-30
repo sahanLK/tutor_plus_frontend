@@ -5,7 +5,7 @@ import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/Footer";
 import React from "react";
 import ReduxProvider from "@/lib/store/ReduxProvider";
-import styles from "./page.module.css";
+import TokenRefresher from "@/components/TokenRefresher";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -23,6 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <html lang="en">
             <body className={`${inter.variable} max-w-screen mx-auto bg-gray-100`}>
                 <ReduxProvider>
+                    <TokenRefresher />
                     <Navbar />
                     <div className="content-inner">
                         {children}

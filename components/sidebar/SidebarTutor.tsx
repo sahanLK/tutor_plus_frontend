@@ -8,7 +8,7 @@ import { SlPeople } from "react-icons/sl";
 import Link from "next/link";
 
 
-export default function Sidebar() {
+export default function SidebarTutor() {
     return (
         <div className="col-span-2 px-4 pt-10 bg-gray-60 shadow pl-6 bg-[#405189] text-white">
             <section className="mb-10">

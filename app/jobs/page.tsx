@@ -1,6 +1,7 @@
 'use client';
 
 import api from "@/lib/axios/axios";
+import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react"
 
@@ -13,21 +14,44 @@ type JobType = {
 
 export default function JobsPage() {
     const [jobs, setJobs] = useState([]);
-    console.log(jobs);
+    const [disabled, setDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function fetchJobs() {
             try {
-                const {data} = await api.get('/posts');
+                setLoading(true);
+                const { data } = await axios.get('http://localhost:8000/posts', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                    }
+                });
                 setJobs(data.posts);
             } catch (err) {
                 console.log(err);
+            } finally {
+                setLoading(false);
             }
-            
         }
-
+        
         fetchJobs();
-    }, [])
+    }, []);
+
+    async function applyJob(jobId: number) {
+        setDisabled(true);
+        const res = await api.get(`/posts/apply/${jobId}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            }
+        });
+        setDisabled(false);
+    }
+
+    console.log(jobs);
+
+    if (loading) {
+        return <h2>Loading</h2>
+    }
 
     return (
         <div className="min-h-screen mx-auto container mt-10 space-y-5">
@@ -38,10 +62,18 @@ export default function JobsPage() {
             </div>
 
             {jobs.map((job: JobType) => (
-                <div className="px-10 py-6 shadow" key={job.id}>
-                    <Link href={`/jobs/${job.id}`}><h1 className="text-xl pb-3 underline">{job.title}</h1></Link>
-                    {/* <h3>Location: {job.location}</h3> */}
-                    <p>{job.content}</p>
+                <div className="px-10 py-6 shadow flex items-center" key={job.id}>
+                    <div>
+                        <Link href={`/jobs/${job.id}`}><h1 className="text-xl pb-3 underline">{job.title}</h1></Link>
+                        <p>{job.content}</p>
+                    </div>
+                    <div className="ml-auto">
+                        <button
+                            className={`px-5 py-2 rounded text-white ${disabled ? 'bg-blue-50' : 'bg-blue-700'}`}
+                            disabled={disabled} onClick={(e) => applyJob(job.id)}>
+                            Apply
+                        </button>
+                    </div>
                 </div>
             ))}
         </div>

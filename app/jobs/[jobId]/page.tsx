@@ -4,29 +4,42 @@ import api from "@/lib/axios/axios";
 import { AxiosError } from "axios";
 import { use, useEffect, useState } from "react";
 
-type PageProps = {
-    params: Promise<{ jobId: string }>
+type PageProps = { params: Promise<{ jobId: string }> }
+type ApplicanType = { id: number, first_name: string, last_name: string }
+
+type PostType = {
+    id: number | null,
+    title: string,
+    content: string,
+    applicants: Array<ApplicanType>,
+    owner: boolean,
+    applied: boolean,
 }
 
 export default function JobPostDetails({ params }: PageProps) {
     const { jobId } = use(params);
-    const [post, setPost] = useState({
+    const [post, setPost] = useState<PostType>({
         id: null,
         title: "",
         content: "",
         applicants: [],
+        owner: false,
+        applied: false
     });
 
     useEffect(() => {
         async function fetchPost() {
             try {
-                const { data } = await api.get(`/posts/${jobId}`);
+                const { data } = await api.get(`/posts/${jobId}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                    }
+                });
                 setPost(data);
             } catch (err) {
                 const error = err as AxiosError;
                 console.log(error);
             }
-
         }
         fetchPost();
     }, []);
@@ -54,7 +67,9 @@ export default function JobPostDetails({ params }: PageProps) {
                     </div>
                 ))}
             </div>
-            <button className="mt-20 px-5 py-2 bg-blue-800 text-white rounded" onClick={applyJob}>Apply</button>
+            {/* <button className="mt-20 px-5 py-2 bg-blue-800 text-white rounded" onClick={applyJob}>
+                {post.applied ? 'Apply' : 'Already Applied'}
+            </button> */}
         </div>
     )
 }

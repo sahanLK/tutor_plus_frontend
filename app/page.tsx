@@ -1,17 +1,30 @@
 'use client';
-import Redirector from "@/components/Redirector";
+
 import styles from "./page.module.css";
 import Image from "next/image";
 import bannerImg from "@/public/homepage/banner.png";
 import boy from "@/public/homepage/boy.png";
-import { useEffect } from "react";
 import Course from "@/components/courses/Course";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { RootState } from "@/lib/store/store";
 
 
 const HomePage = () => {
-    const featuredCourses = [
-        {'title': 'Beginner Adobe Illustrator for Graphic Design'}
-    ]
+    const router = useRouter();
+    const loggedIn = useSelector((state: RootState) => state.auth.token ? true : false);
+    const [checked, setChecked] = useState(false);
+
+    useEffect(() => {
+        if (loggedIn) {
+            router.replace('/dashboard');
+        } else {
+            setChecked(true);
+        }
+    }, [loggedIn]);
+
+    if (!checked) return null;
 
     return (
         <div>
@@ -76,4 +89,4 @@ const HomePage = () => {
     );
 }
 
-export default Redirector(HomePage);
+export default HomePage;

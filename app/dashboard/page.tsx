@@ -1,7 +1,7 @@
 'use client';
 
 import AuthGuard from "@/components/AuthGuard";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/sidebar/SidebarRoot";
 import api from "@/lib/axios/axios";
 import { RootState } from "@/lib/store/store";
 import { AxiosError } from "axios";
