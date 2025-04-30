@@ -1,6 +1,7 @@
 'use client';
 
 import axios from 'axios';
+import { setLoggedIn, setLoggedOut } from '../store/authSlice';
 
 
 const api = axios.create({
@@ -20,14 +21,14 @@ api.interceptors.response.use(
                 const res = await api.get('/users/refresh-token');
                 const newAccessToken = res.data.access_token;
                 
-                localStorage.setItem('access_token', newAccessToken);
+                setLoggedIn({access_token: newAccessToken});
                 api.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
                 originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
                 return api(originalRequest);
             } catch (err) {
                 console.log('Token refresh failed');
-                localStorage.removeItem('access_token');
+                setLoggedOut();
             }
         }
 
