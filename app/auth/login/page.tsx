@@ -38,10 +38,10 @@ export default function LoginPage() {
             }
 
             const data = await response.json();
-            console.log(data);
             dispatch(setActiveRole({activeRole: data.active_role}));
             dispatch(setLoggedIn({access_token: data.access_token}));
             router.push('/dashboard');
+            console.log("Login Success: Latest Acces token: ", data.access_token);
 
         } catch (e: any) {
             console.log("Error notice");

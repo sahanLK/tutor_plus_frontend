@@ -1,44 +1,44 @@
 'use client';
-import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
-import {useDispatch} from "react-redux";
-import {setLoggedOut} from "@/lib/store/authSlice";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setLoggedOut } from "@/lib/store/authSlice";
+import api from "@/lib/axios/axios";
+import { AxiosError } from "axios";
 
 
 export default function LogoutPage() {
     const dispatch = useDispatch();
     const router = useRouter();
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const controller = new AbortController();
-        const signal = controller.signal;
+        async function logout() {
+            const controller = new AbortController();
+            const signal = controller.signal;
 
-        // setLoading(true);
-        fetch('http://localhost:8000/users/logout', {
-            credentials: 'include',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-            },
-            signal,
-        }).then(res => {
-            if (!signal.aborted) {
-                console.log(res);
-                localStorage.removeItem('access_token');
+            try {
+                setLoading(true);
+                const resp = await api.get('/users/logout');
+                if (resp.status === 204) {
+                    console.log("Logout Successful");
+                }
+            } catch (err) {
+                const error = err as AxiosError;
+                console.log(error.message);
+            } finally {
                 dispatch(setLoggedOut());
-                // setLoading(false);
-                router.push('/auth/login');
+                setLoading(false);
+                router.replace('/auth/login');
             }
-        }).catch(err => {
-            if (err.name != "AbortError") {
-                console.error(err);
-            }
-        });
-        return () => controller.abort();
+
+            return () => controller.abort();
+        }
+
+        logout();
     }, []);
 
     return (
-        // <div>{loading ? 'Logging Out': 'Logout Success'}</div>
-        <div>Some</div>
+        <div>{loading ? 'Logging Out': ''}</div>
     )
 }

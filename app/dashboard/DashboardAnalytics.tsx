@@ -3,6 +3,7 @@ import WorkHistory from "@/components/dashboard/charts/WorkHistory";
 
 
 export default function DashboardAnalytics() {
+    console.log("Mounted");
     return (
         <>
             <div className="flex mt-20 gap-5">

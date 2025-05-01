@@ -1,4 +1,5 @@
 'use client';
+
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,7 +17,6 @@ export default function SidebarLink({ title, url }: PropTypes) {
     useEffect(() => {
         const fullPath = (searchParams.size === 0) ? pathName : `${pathName}?${searchParams.toString()}`;
         setActive(fullPath == url);
-        
     }, [pathName, searchParams, url]);
 
     return (

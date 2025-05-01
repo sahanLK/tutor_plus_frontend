@@ -1,9 +1,24 @@
 import { FaStar, FaRegStar, FaStarHalfAlt, FaEnvelope, FaPhone } from "react-icons/fa";
 import styles from "./page.module.css";
 import Image from "next/image";
+import api from "@/lib/axios/axios";
 
 
 export default function TeacherProfile() {
+    // useEffect(() => {
+    //         const fetchData = async () => {
+    //             const token = localStorage.getItem('access_token');
+    //             try {
+    //                 const {data} = await api.get('/users/account-details');
+    //                 console.log("Account Details: ", data);
+    //             } catch (err: unknown) {
+    //                 const error = err as AxiosError;
+    //             }
+    //         }
+    
+    //         fetchData();
+    //     }, []);
+        
     return (
         <div className="max-w-7xl mx-auto my-10 min-h-screen">
             {/* Profile Header */}

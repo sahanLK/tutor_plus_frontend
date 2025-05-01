@@ -1,12 +1,8 @@
 'use client';
-import { RootState } from "@/lib/store/store";
-import { useSelector } from "react-redux"
-import SidebarStudent from "./SidebarStudent";
-import SidebarTutor from "./SidebarTutor";
+
 import { SlGraduation, SlPeople } from "react-icons/sl";
 import Link from "next/link";
 import { RxDashboard } from "react-icons/rx";
-import { ChevronRight, ChevronDown } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import { MdOutlineAssignment, MdOutlineQuiz } from "react-icons/md";
 import SidebarLink from "./SidebarLink";

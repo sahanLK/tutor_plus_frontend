@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { setLoggedIn, setLoggedOut } from '../store/authSlice';
+import { store } from '../store/store';
 
 
 const api = axios.create({
@@ -9,26 +10,46 @@ const api = axios.create({
     withCredentials: true,
 });
 
+
+api.interceptors.request.use(
+    (config) => {
+        const token = store.getState().auth.token;
+        console.log("Token from store", token);
+
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config
+    }, 
+
+    (error) => {
+        return Promise.reject(error);
+      }
+);
+
+
 api.interceptors.response.use(
     response => response,
-    async error => {
+
+    async (error) => {
         const originalRequest = error.config;
 
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {
-                const res = await api.get('/users/refresh-token');
-                const newAccessToken = res.data.access_token;
+                const {data} = await api.get('/users/refresh-token');
+                const newAccessToken = data.access_token;
                 
-                setLoggedIn({access_token: newAccessToken});
+                store.dispatch(setLoggedIn({access_token: newAccessToken}));
                 api.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
                 originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
                 return api(originalRequest);
+                
             } catch (err) {
-                console.log('Token refresh failed');
-                setLoggedOut();
+                store.dispatch(setLoggedOut());
+                window.location.href = "/auth/login";
             }
         }
 

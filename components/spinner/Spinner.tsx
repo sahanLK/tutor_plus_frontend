@@ -1,6 +1,9 @@
-import styles from './Spinner.module.css';
-
+// components/LoadingSpinner.tsx
 
 export default function Spinner() {
-    return <label className={styles.spinner}></label>;
+    return (
+        <div className="flex items-center justify-center h-full w-full">
+            <div className="h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    );
 }

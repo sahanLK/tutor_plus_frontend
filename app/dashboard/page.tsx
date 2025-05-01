@@ -2,14 +2,15 @@
 
 import AuthGuard from "@/components/AuthGuard";
 import Sidebar from "@/components/sidebar/SidebarRoot";
-import api from "@/lib/axios/axios";
 import { RootState } from "@/lib/store/store";
 import { AxiosError } from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import DashBoardSummary from "./DashbordSummary";
+import Spinner from "@/components/spinner/Spinner";
 import DashboardAnalytics from "./DashboardAnalytics";
+import DashBoardSummary from "./DashbordSummary";
+import api from "@/lib/axios/axios";
 
 
 const DashBoard = () => {
@@ -20,47 +21,8 @@ const DashBoard = () => {
     const router = useRouter();
     const activeRole = useSelector((state: RootState) => state.config.activeRole);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //       const token = localStorage.getItem('access_token');
-    //       try {
-    //         const res = await api.get('/users/account-details', {
-    //           headers: {
-    //             Authorization: `Bearer ${token}`,
-    //           },
-    //         });
-    //         console.log(res.data);
-    //       } catch (err) {
-    //         console.error(err);
-    //       }
-    //     };
 
-    //     fetchData();
-    //   }, []);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const token = localStorage.getItem('access_token');
-            try {
-                const res = await api.get('/users/account-details', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                console.log(res.data);
-            } catch (err: unknown) {
-                const error = err as AxiosError;
-
-                if (error.response?.status === 401) {
-                    router.push("/auth/login")
-                }
-            }
-        };
-
-        fetchData();
-    }, []);
-
-
+    
     return (
         <div className="grid grid-cols-13 min-h-screen">
             {/* Sidebar */}
@@ -71,7 +33,9 @@ const DashBoard = () => {
                 <h2 className="text-md">Good Morning, Sahan!</h2>
                 <p className="text-sm text-stone-500 mt-1">Here&#39;s what&#39;s happening today.</p>
 
-                {dashboardContent == 'analytics' ? <DashboardAnalytics /> : <DashBoardSummary />}
+                <Suspense fallback={<Spinner />}>
+                    {dashboardContent == 'analytics' ? <DashboardAnalytics /> : <DashBoardSummary />}
+                </Suspense>
 
             </div>
         </div>

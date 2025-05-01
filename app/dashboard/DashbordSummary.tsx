@@ -3,6 +3,7 @@ import { IoDocumentText } from "react-icons/io5";
 
 
 export default function DashBoardSummary() {
+    console.log("Mounted: Summary");
     return (
         <>
             {/* Cards */}

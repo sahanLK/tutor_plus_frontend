@@ -19,10 +19,11 @@ import { setActiveRole } from "@/lib/store/UiConfigSlice";
 import { useRouter } from "next/navigation";
 import { GiTeacher } from "react-icons/gi";
 import { PiStudentBold } from "react-icons/pi";
+import { setLoggedIn, setLoggedOut } from "@/lib/store/authSlice";
 
 
 const Navbar = () => {
-    const loggedIn = useSelector((state: RootState) => state.auth.token ? true : false);
+    const loggedIn = useSelector((state: RootState) => state.auth.token);
     const activeRole = useSelector((state: RootState) => state.config.activeRole);
     const dispatch = useDispatch<AppDispatch>();
     const router = useRouter();
@@ -31,11 +32,11 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const [menuOpen, setMenuOpen] = useState(false);
-    const dropdownRef = useRef(null);
+    const dropdownRef = useRef<HTMLUListElement | null>(null);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            if (dropdownRef.current && event.target instanceof Node && !dropdownRef.current.contains(event.target)) {
                 setMenuOpen(false);
             }
         }
@@ -51,21 +52,15 @@ const Navbar = () => {
         const newRole = (activeRole === "student") ? 'teacher' : 'student';
 
         try {
-            const resp = await api.get(`/users/change-role?role=${newRole}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                },
-            });
+            const resp = await api.get(`/users/change-role?role=${newRole}`);
+            
+            if (resp.status == 200) {
+                dispatch(setActiveRole({ activeRole: newRole }));
+                window.location.href = "/dashboard";  // if role change successful, reload the page to refresh the token 
+            }
 
-            dispatch(setActiveRole({ activeRole: newRole }));
-            console.log(resp);
-
-            const data = await resp.data;
-            console.log(data);
-            localStorage.setItem('access_token', data.access_token)
         } catch (err) {
-            const error = err as AxiosError;
-            console.log("Something Bad Happened: ", error);
+            dispatch(setLoggedOut())
             router.push("/auth/login");
         }
     }
@@ -74,7 +69,7 @@ const Navbar = () => {
         <nav className="sticky top-0 left-0 w-full px-5 bg-gray-100 shadow">
             <div className="w-full mx-auto  py-1">
                 <div className="flex justify-between h-16 items-center">
-
+                    
                     {/* Logo */}
                     <div className="text-2xl font-bold text-gray-800">
                         <Link href="/"><Image src={Logo} alt="Logo" width={150} height={80} /></Link>
