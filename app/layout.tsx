@@ -23,11 +23,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <html lang="en">
             <body className={`${inter.variable} max-w-screen mx-auto bg-gray-100`}>
                 <ReduxProvider>
-                    <TokenRefresher />
-                    <Navbar />
-                    <div className="content-inner">
-                        {children}
-                    </div>
+                    <TokenRefresher>
+                        <Navbar />
+                        <div className="content-inner">
+                            {children}
+                        </div>
+                    </TokenRefresher>
                 </ReduxProvider>
                 <Footer />
             </body>

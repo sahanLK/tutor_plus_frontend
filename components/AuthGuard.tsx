@@ -11,14 +11,18 @@ export default function AuthGuard(Component: React.ComponentType) {
         const router = useRouter();
         const [shouldRender, setShouldRender] = useState(false);
 
+        
         useEffect(() => {
             if (!loggedIn) {
-                router.push("/auth/login");
+                console.log("User not logged in: ", loggedIn);
+                // router.push("/auth/login");
             } else {
+                console.log("User Logged In: ", loggedIn)
                 setShouldRender(true);
             }
-        }, [loggedIn]);
+        }, []);
 
         return shouldRender ? <Component {...props} /> : null;
     }
 }
+    

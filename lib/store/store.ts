@@ -11,13 +11,15 @@ const persistConfig = {
     storage,
 }
 
-const persistentReducer = persistReducer(persistConfig, combineReducers({
+const persistentReducer = persistReducer(persistConfig, configSlice);
+
+const rootReducer = combineReducers({
     auth: authSlice,
-    config: configSlice,
-}));
+    config: persistentReducer,
+})
 
 export const store = configureStore({
-    reducer: persistentReducer,
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
@@ -27,10 +29,5 @@ export const store = configureStore({
 });
 
 export const persister = persistStore(store);
-
-store.subscribe(() => {
-    console.log(store.getState());
-})
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

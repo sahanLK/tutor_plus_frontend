@@ -2,9 +2,12 @@
 
 import api from "@/lib/axios/axios";
 import { AxiosError } from "axios";
-import { useState } from "react"
+import React, { useState } from "react";
+
+const options = ["Python", "Java", "React", "Spring Boot", "C++", "JavaScript"]
 
 export default function CreateJobPage() {
+    const [filtered, setFiltered] = useState<Set<string>>(new Set());
     const [formData, setFormData] = useState({
         title: "",
         content: "",
@@ -17,7 +20,7 @@ export default function CreateJobPage() {
     async function handleSubmit(e: React.ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
         console.log(formData);
-        
+
         try {
             const res = await api.post('/posts/', formData, {
                 headers: {
@@ -26,9 +29,18 @@ export default function CreateJobPage() {
             });
             const data = await res.data;
             console.log(data);
-        } catch(err) {
+        } catch (err) {
             const error = err as AxiosError;
         }
+    }
+
+    function filterOptions(e: React.ChangeEvent<HTMLInputElement>) {
+        const val = e.target.value.toLowerCase().trim();
+        if (!val) {
+            setFiltered(new Set());
+            return;
+        }
+        setFiltered(new Set(options.filter(option => option.toLowerCase().trim().includes(val))));
     }
 
     return (
@@ -51,11 +63,20 @@ export default function CreateJobPage() {
                     className="block border-1 border-stone-400 py-2 px-3 w-full rounded"
                 />
 
-                <h1></h1>
-                <input 
-                    type="submit" value="Post Job" 
-                    className="px-4 py-1 bg-blue-700 text-white mt-5 cursor-pointer"
-                />
+                <h1 className="mt-10 text-lg text-stone-700">Select the Subjects</h1>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Select Subjects"
+                        className="block border-1 border-stone-400 py-2 px-3 w-full rounded"
+                        onChange={filterOptions}
+                    />
+                    <ul>
+                        {[...filtered].map((item, index) => (
+                            <li key={index+1}>{item}</li>
+                        ))}
+                    </ul>
+                </div>
             </form>
         </div>
     )
