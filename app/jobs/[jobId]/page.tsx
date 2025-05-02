@@ -17,6 +17,7 @@ type PostType = {
     author: boolean,
     owner: { first_name: string, last_name: string, profile_image: string | null, }
     applied: boolean,
+    subjects: [{ id: number, name: string }],
 }
 
 export default function JobPostDetails({ params }: PageProps) {
@@ -29,7 +30,8 @@ export default function JobPostDetails({ params }: PageProps) {
         applicants: [],
         author: false,
         applied: false,
-        owner: { first_name: "", last_name: "", profile_image: null }
+        owner: { first_name: "", last_name: "", profile_image: null },
+        subjects: [{ id: 0, name: "" }]
     });
 
     useEffect(() => {
@@ -46,6 +48,19 @@ export default function JobPostDetails({ params }: PageProps) {
         fetchPost();
     }, []);
 
+    async function applyJob() {
+        try {
+            const resp = await api.get(`/apply/${post.id}`);
+
+            if (resp.status === 200) {
+                console.log("Job application successful");
+            }
+        } catch (err) {
+            const error = err as AxiosError;
+            console.log(error.message);
+        }
+    }
+
     return (
         <div className="container mx-auto min-h-screen mt-15 mb-20">
             <div className="mb-10">
@@ -53,7 +68,17 @@ export default function JobPostDetails({ params }: PageProps) {
                 <p className="text-stone-600">Posted By:&emsp;{post.owner.first_name} {post.owner.last_name}</p>
             </div>
 
-            <div>
+            {post.subjects.length > 0 && (
+                <div className="my-10 flex flex-wrap items-center gap-4 text-stone-500">
+                    {post.subjects.map(subject => (
+                        <span className="py-1 px-4 bg-stone-200 border-1 border-stone-300 rounded" key={subject.id}>{subject.name}</span>
+                    ))}
+                </div>
+            )}
+
+            <button className="px-4 py-2 bg-green-700 text-white rounded cursor-pointer" onClick={applyJob}>Apply</button>
+
+            <div className="mt-10">
                 <div className="flex items-center gap-3 text-stone-700 mb-10 border-b-1 border-stone-300">
                     <span
                         onClick={() => setActiveTab(1)}

@@ -70,7 +70,6 @@ const Navbar = () => {
 
     return (
         <nav className="sticky top-0 left-0 w-full px-5 bg-gray-100 shadow">
-            TOKEN: {loggedIn}
             <div className="w-full mx-auto  py-1">
                 <div className="flex justify-between h-16 items-center">
                     
