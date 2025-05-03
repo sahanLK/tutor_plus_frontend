@@ -7,9 +7,9 @@ export default async function JobsPage() {
             <h1 className="text-3xl mb-10">Find Tutor Jobs</h1>
 
             <div className="block">
-                <input type="search" className="border-1 border-stone-700" />
+                <input type="search" className="border-1 border-stone-700"/>
             </div>
-            <JobList />
+            <JobList/>
         </div>
     )
 }

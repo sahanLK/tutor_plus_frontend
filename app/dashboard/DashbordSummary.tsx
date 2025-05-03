@@ -1,5 +1,5 @@
-import { FaBookReader } from "react-icons/fa";
-import { IoDocumentText } from "react-icons/io5";
+import {FaBookReader} from "react-icons/fa";
+import {IoDocumentText} from "react-icons/io5";
 
 
 export default function DashBoardSummary() {
@@ -19,7 +19,7 @@ export default function DashBoardSummary() {
                             <h1 className="text-2xl font-bold">2</h1>
                         </div>
                         <div className="w-1/3 flex items-center pl-2">
-                            <FaBookReader size={40} />
+                            <FaBookReader size={40}/>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ export default function DashBoardSummary() {
                             <h1 className="text-2xl font-bold">2</h1>
                         </div>
                         <div className="w-1/3 flex items-center pl-2">
-                            <IoDocumentText size={40} />
+                            <IoDocumentText size={40}/>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ export default function DashBoardSummary() {
                             <h1 className="text-2xl font-bold">2</h1>
                         </div>
                         <div className="w-1/3 flex items-center pl-2">
-                            <FaBookReader size={40} className="mx-auto" />
+                            <FaBookReader size={40} className="mx-auto"/>
                         </div>
                     </div>
                 </div>

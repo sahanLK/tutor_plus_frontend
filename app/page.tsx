@@ -5,10 +5,10 @@ import Image from "next/image";
 import bannerImg from "@/public/homepage/banner.png";
 import boy from "@/public/homepage/boy.png";
 import Course from "@/components/courses/Course";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
-import { RootState } from "@/lib/store/store";
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {useRouter} from "next/navigation";
+import {RootState} from "@/lib/store/store";
 
 
 const HomePage = () => {
@@ -33,7 +33,7 @@ const HomePage = () => {
                     <div className="grid grid-cols-2 mb-50">
                         <div className="my-auto">
                             <h2 className="text-6xl font-bold space-y-3 text-stone-700 tracking-sm leading-tight">
-                                Top  <span className="text-yellow-600">Instructors</span>  From<br/> All Around the World.
+                                Top <span className="text-yellow-600">Instructors</span> From<br/> All Around the World.
                             </h2>
                             <p className="mt-8 mb-16 leading-7 text-stone-600">
                                 Connecting Teachers and Students from all around the world, while integrating, <br/>
@@ -42,7 +42,7 @@ const HomePage = () => {
                             <a className="bg-blue-800 px-6 py-4 text-white tracking-wide">Get Started for Free</a>
                         </div>
                         <div className="mx-au">
-                            <Image src={bannerImg} alt="bannner" className="h-auto" aria-hidden={true} />
+                            <Image src={bannerImg} alt="bannner" className="h-auto" aria-hidden={true}/>
                         </div>
                     </div>
                 </div>

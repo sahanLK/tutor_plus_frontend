@@ -1,10 +1,11 @@
 'use client';
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { setLoggedOut } from "@/lib/store/authSlice";
+
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
+import {useDispatch} from "react-redux";
+import {setLoggedOut} from "@/lib/store/authSlice";
 import api from "@/lib/axios/axios";
-import { AxiosError } from "axios";
+import {AxiosError} from "axios";
 
 
 export default function LogoutPage() {
@@ -15,7 +16,7 @@ export default function LogoutPage() {
     useEffect(() => {
         async function logout() {
             const controller = new AbortController();
-            const signal = controller.signal;
+            // const signal = controller.signal;
 
             try {
                 setLoading(true);
@@ -39,6 +40,6 @@ export default function LogoutPage() {
     }, []);
 
     return (
-        <div>{loading ? 'Logging Out': ''}</div>
+        <div>{loading ? 'Logging Out' : ''}</div>
     )
 }

@@ -10,7 +10,7 @@ export default function DashboardAnalytics() {
 
                 <div className="w-3/4 pr-20">
                     <p className="text-lg text-stone-600">Analytics</p>
-                    <Chart />
+                    <Chart/>
                 </div>
 
                 {/* Recent Activity */}
@@ -25,7 +25,7 @@ export default function DashboardAnalytics() {
 
             <div>
                 <p>Work History</p>
-                <WorkHistory />
+                <WorkHistory/>
             </div>
 
         </>

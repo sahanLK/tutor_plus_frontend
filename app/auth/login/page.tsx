@@ -6,7 +6,8 @@ import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import {setLoggedIn} from "@/lib/store/authSlice";
 import {useDispatch} from "react-redux";
-import { setActiveRole } from "@/lib/store/UiConfigSlice";
+import {setActiveRole} from "@/lib/store/UiConfigSlice";
+import {AxiosError} from "axios";
 
 export default function LoginPage() {
     const dispatch = useDispatch();
@@ -43,9 +44,10 @@ export default function LoginPage() {
             router.push('/dashboard');
             console.log("Login Success: Latest Acces token: ", data.access_token);
 
-        } catch (e: any) {
+        } catch (err) {
+            const error = err as AxiosError;
             console.log("Error notice");
-            setError(e.message);
+            setError(error.message);
         } finally {
             setLoading(false);
         }
@@ -65,7 +67,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md bg-white mx-auto my-16 p-8 shadow-lg rounded-lg">
             <h2 className="text-2xl font-bold text-center mb-10">Sign In</h2>
 
-            {error !== '' ? <>{error}</>: ''}
+            {error !== '' ? <>{error}</> : ''}
 
             <form className="space-y-3 mb-8" onSubmit={handleSubmit}>
                 <label className="block text-sm font-semibold text-gray-600 mb-1">Email*</label>
@@ -89,15 +91,17 @@ export default function LoginPage() {
 
                 <button
                     type="submit"
-                    className={`${loading ? 'bg-gray-300': 'bg-blue-600 hover:bg-blue-700'} w-full py-2 mt-4 mb-2 text-white transition rounded-sm cursor-pointer `}
+                    className={`${loading ? 'bg-gray-300' : 'bg-blue-600 hover:bg-blue-700'} w-full py-2 mt-4 mb-2 text-white transition rounded-sm cursor-pointer `}
                     disabled={loading}
                 >Sign In
                 </button>
             </form>
 
             <div className={`${styles.separator} mb-6`}><span className="font-light text-xs">OR</span></div>
-            <SignInWithOAuth title="Continue with Google" provider="google" redirect={() => handleSignInWithOAuth('google')}/>
-            <SignInWithOAuth title="Continue with Linkedin" provider="linkedin" redirect={() => handleSignInWithOAuth('linkedin')}/>
+            <SignInWithOAuth title="Continue with Google" provider="google"
+                             redirect={() => handleSignInWithOAuth('google')}/>
+            <SignInWithOAuth title="Continue with Linkedin" provider="linkedin"
+                             redirect={() => handleSignInWithOAuth('linkedin')}/>
         </div>
     );
 }

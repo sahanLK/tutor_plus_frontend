@@ -1,15 +1,15 @@
 'use client';
 
-import { setLoggedIn, setLoggedOut } from "@/lib/store/authSlice";
-import axios, { AxiosError } from "axios";
-import { ReactNode, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { AppDispatch } from "@/lib/store/store";
-import { useDispatch } from "react-redux";
+import {setLoggedIn, setLoggedOut} from "@/lib/store/authSlice";
+import axios, {AxiosError} from "axios";
+import {ReactNode, useEffect, useState} from "react";
+// import {useRouter} from "next/navigation";
+import {AppDispatch} from "@/lib/store/store";
+import {useDispatch} from "react-redux";
 
 
-export default function TokenRefresher({children} : {children: ReactNode}) {
-    const router = useRouter();
+export default function TokenRefresher({children}: { children: ReactNode }) {
+    // const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
     const [tokenReady, setTokenReady] = useState(false);
 

@@ -11,7 +11,7 @@ export default function Token() {
     useEffect(() => {
         fetch('http://localhost:8000/auth/google/auth/exchange', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 auth_code: authorizationCode,
                 state: state,

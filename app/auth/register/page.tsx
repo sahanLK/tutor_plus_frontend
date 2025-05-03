@@ -1,8 +1,8 @@
 'use client';
-import React, { ReactEventHandler, useState } from "react";
+import React, {useState} from "react";
 import styles from "@/app/auth/login/page.module.css";
 import SignInWithOAuth from "@/components/auth/SignInWithOAuth";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 
 
 const RegisterPage = () => {
@@ -20,13 +20,13 @@ const RegisterPage = () => {
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({...formData, [e.target.name]: e.target.value});
         console.log(formData);
     };
 
     function handleRoleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setFormData(prev => {
-            const updated = { ...prev, default_role: e.target.value };
+            const updated = {...prev, default_role: e.target.value};
             console.log("New state:", updated);
             return updated;
         });
@@ -55,7 +55,7 @@ const RegisterPage = () => {
 
         } else if (step === 3) {
             console.log("Validating Step 3")
-            
+
         }
     }
 
@@ -73,29 +73,28 @@ const RegisterPage = () => {
 
     function handleSubmit() {
         validatePassword();
-        
+
         if (formError) return;
         formData.default_role = formData.default_role.toLowerCase();
-        
+
         fetch('http://localhost:8000/users/register', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData)
         })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log(data);
-            router.push('/auth/login');
-        })
-        .catch(err => console.log(err))
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data);
+                router.push('/auth/login');
+            })
+            .catch(err => console.log(err))
     }
 
     function handleSignInWithOAuth(provider: string) {
         let url: string;
         if (provider == 'google') {
             url = 'http://localhost:8000/api/auth/google/redirect';
-        }
-        else {
+        } else {
             url = '/api/auth/linkedin/redirect';
         }
         window.location.href = url;
@@ -120,7 +119,7 @@ const RegisterPage = () => {
                             value={formData.email}
                             onChange={handleChange}
                         />
-                        I'm a:
+                        {/*I'm a:*/}
                         <select value={formData.default_role} onChange={handleRoleChange} className="ml-4 py-2 px-4">
                             <option value="Student" defaultChecked>Student</option>
                             <option value="Teacher">Teacher</option>
@@ -183,7 +182,7 @@ const RegisterPage = () => {
                         <button
                             type="button"
                             className="w-25 py-2 text-left mr-auto block rounded-sm cursor-pointer"
-                            onClick={() => setStep(step === 1 ? 1 : step-1)}
+                            onClick={() => setStep(step === 1 ? 1 : step - 1)}
                         >Previous
                         </button>
                     </div>
@@ -208,8 +207,10 @@ const RegisterPage = () => {
                 <span className="font-light text-xs">OR</span>
             </div>
 
-            <SignInWithOAuth title="Continue with Google" provider="google" redirect={() => handleSignInWithOAuth('google')} />
-            <SignInWithOAuth title="Continue with Linkedin" provider="linkedin" redirect={() => handleSignInWithOAuth('linkedin')} />
+            <SignInWithOAuth title="Continue with Google" provider="google"
+                             redirect={() => handleSignInWithOAuth('google')}/>
+            <SignInWithOAuth title="Continue with Linkedin" provider="linkedin"
+                             redirect={() => handleSignInWithOAuth('linkedin')}/>
         </div>
     );
 };

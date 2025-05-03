@@ -1,14 +1,18 @@
 'use client';
 
 import api from "@/lib/axios/axios";
-import { AxiosError } from "axios";
+import {AxiosError} from "axios";
 import Image from "next/image";
-import { use, useEffect, useRef, useState } from "react";
+import {use, useEffect, useRef, useState} from "react";
 import avatar from "@/public/avatar.png";
 import Modal from "@/components/Modal";
 
 type PageProps = { params: Promise<{ jobId: string }> }
-type JobApplicationType = { id: number, description: string, user: { first_name: string, last_name: string, profile_image: string } }
+type JobApplicationType = {
+    id: number,
+    description: string,
+    user: { first_name: string, last_name: string, profile_image: string }
+}
 
 type PostType = {
     id: number | null,
@@ -21,8 +25,8 @@ type PostType = {
     subjects: [{ id: number, name: string }],
 }
 
-export default function JobPostDetails({ params }: PageProps) {
-    const { jobId } = use(params);
+export default function JobPostDetails({params}: PageProps) {
+    const {jobId} = use(params);
     const [activeTab, setActiveTab] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [post, setPost] = useState<PostType>({
@@ -32,15 +36,15 @@ export default function JobPostDetails({ params }: PageProps) {
         job_applications: [],
         author: false,
         applied: false,
-        owner: { first_name: "", last_name: "", profile_image: null },
-        subjects: [{ id: 0, name: "" }]
+        owner: {first_name: "", last_name: "", profile_image: null},
+        subjects: [{id: 0, name: ""}]
     });
     const jobDescriptionRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         async function fetchPost() {
             try {
-                const { data } = await api.get(`/posts/${jobId}`);
+                const {data} = await api.get(`/posts/${jobId}`);
                 setPost(data);
                 console.log(data)
             } catch (err) {
@@ -58,7 +62,7 @@ export default function JobPostDetails({ params }: PageProps) {
 
     async function applyJob() {
         try {
-            const requestBody = { job_post_id: post.id, description: jobDescriptionRef.current?.value }
+            const requestBody = {job_post_id: post.id, description: jobDescriptionRef.current?.value}
             console.log("Applying for the Job with: ", requestBody);
             const resp = await api.post(`/posts/apply/${post.id}`, requestBody);
 
@@ -81,15 +85,15 @@ export default function JobPostDetails({ params }: PageProps) {
                 submitBtnText="Submit"
                 onSubmit={applyJob}
             >
-            <div>
+                <div>
                 <textarea
                     rows={10}
                     className="w-full p-3 border-1 border-stone-400 rounded focus:outline-0"
                     placeholder="Tell them why you are the best fit."
                     ref={jobDescriptionRef}
                 />
-            </div>
-        </Modal >
+                </div>
+            </Modal>
             <div className="container mx-auto min-h-screen mt-15 mb-20">
                 <div className="mb-10">
                     <h2 className="text-3xl text-stone-700 mb-4">{post.title}</h2>
@@ -100,7 +104,8 @@ export default function JobPostDetails({ params }: PageProps) {
                 {post.subjects.length > 0 && (
                     <div className="my-10 flex flex-wrap items-center gap-4 text-stone-500">
                         {post.subjects.map(subject => (
-                            <span className="py-1 px-4 bg-stone-200 border-1 border-stone-300 rounded" key={subject.id}>{subject.name}</span>
+                            <span className="py-1 px-4 bg-stone-200 border-1 border-stone-300 rounded"
+                                  key={subject.id}>{subject.name}</span>
                         ))}
                     </div>
                 )}
@@ -132,7 +137,8 @@ export default function JobPostDetails({ params }: PageProps) {
                     {activeTab == 2 && (
                         post.job_applications.map((application: JobApplicationType) => (
                             <div key={application.id} className="flex items-center gap-4">
-                                <Image src={application.user.profile_image ? application.user.profile_image : avatar} width={50} height={50} alt="" />
+                                <Image src={application.user.profile_image ? application.user.profile_image : avatar}
+                                       width={50} height={50} alt=""/>
                                 <h2 className="text-md text-stone-700">{application.user.first_name}&nbsp;{application.user.last_name}</h2>
                             </div>
                         ))

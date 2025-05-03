@@ -1,9 +1,9 @@
 'use client';
 
 import api from "@/lib/axios/axios";
-import { AxiosError } from "axios";
+import {AxiosError} from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Spinner from "../spinner/Spinner";
 
 
@@ -16,13 +16,13 @@ type JobType = {
 export default function JobList() {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(false);
-    
+
 
     useEffect(() => {
         async function fetchPosts() {
             try {
                 setLoading(true);
-                const { data } = await api.get('/posts');
+                const {data} = await api.get('/posts');
                 setJobs(data.posts);
             } catch (err) {
                 const error = err as AxiosError;
@@ -35,8 +35,8 @@ export default function JobList() {
         fetchPosts();
     }, []);
 
-    
-    if (loading) return <Spinner />;
+
+    if (loading) return <Spinner/>;
 
     return (
         <>

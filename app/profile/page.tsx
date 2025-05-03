@@ -1,7 +1,4 @@
-import { FaStar, FaRegStar, FaStarHalfAlt, FaEnvelope, FaPhone } from "react-icons/fa";
-import styles from "./page.module.css";
 import Image from "next/image";
-import api from "@/lib/axios/axios";
 
 
 export default function TeacherProfile() {
@@ -15,16 +12,16 @@ export default function TeacherProfile() {
     //                 const error = err as AxiosError;
     //             }
     //         }
-    
+
     //         fetchData();
     //     }, []);
-        
+
     return (
         <div className="max-w-7xl mx-auto my-10 min-h-screen">
             {/* Profile Header */}
             <div className="profile-header grid grid-cols-2">
                 <div className="px-20 ml-30">
-                    <Image src="/avatar.png" alt="profile-pic" width={200} height={200} className="rounded-full" />
+                    <Image src="/avatar.png" alt="profile-pic" width={200} height={200} className="rounded-full"/>
                 </div>
                 <div>
                     <h2 className="text-xl text-stone-600">Sahan Lakshitha</h2>
@@ -39,7 +36,7 @@ export default function TeacherProfile() {
                     <li>Subjects</li>
                 </ul>
             </div>
-            
+
             {/* Section Data */}
             <div>
                 <h2>Content</h2>

@@ -1,8 +1,8 @@
 'use client';
 
-import axios from 'axios';
-import { setLoggedIn, setLoggedOut } from '../store/authSlice';
-import { store } from '../store/store';
+import axios, {AxiosError} from 'axios';
+import {setLoggedIn, setLoggedOut} from '../store/authSlice';
+import {store} from '../store/store';
 
 
 const api = axios.create({
@@ -20,11 +20,11 @@ api.interceptors.request.use(
             config.headers['Authorization'] = `Bearer ${token}`;
         }
         return config
-    }, 
+    },
 
     (error) => {
         return Promise.reject(error);
-      }
+    }
 );
 
 
@@ -40,14 +40,16 @@ api.interceptors.response.use(
             try {
                 const {data} = await api.get('/users/refresh-token');
                 const newAccessToken = data.access_token;
-                
+
                 store.dispatch(setLoggedIn({access_token: newAccessToken}));
                 api.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
                 originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
                 return api(originalRequest);
-                
+
             } catch (err) {
+                const error = err as AxiosError;
+                console.log(error.message);;
                 store.dispatch(setLoggedOut());
                 window.location.href = "/auth/login";
             }

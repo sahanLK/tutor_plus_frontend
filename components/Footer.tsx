@@ -1,4 +1,4 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
+import {FaFacebook, FaGithub, FaInstagram, FaLinkedin, FaTwitter, FaYoutube} from "react-icons/fa";
 
 export default function Footer() {
     return (
@@ -54,14 +54,15 @@ export default function Footer() {
             {/* Social Icons & Copyright */}
             <div className="mt-10 border-t pt-6 text-center">
                 <div className="flex justify-center space-x-6 text-white">
-                    <FaFacebook className="w-5 h-5 cursor-pointer hover:text-gray-200" />
-                    <FaTwitter className="w-5 h-5 cursor-pointer hover:text-gray-200" />
-                    <FaInstagram className="w-5 h-5 cursor-pointer hover:text-gray-200" />
-                    <FaGithub className="w-5 h-5 cursor-pointer hover:text-gray-200" />
-                    <FaLinkedin className="w-5 h-5 cursor-pointer hover:text-gray-200" />
-                    <FaYoutube className="w-5 h-5 cursor-pointer hover:text-gray-200" />
+                    <FaFacebook className="w-5 h-5 cursor-pointer hover:text-gray-200"/>
+                    <FaTwitter className="w-5 h-5 cursor-pointer hover:text-gray-200"/>
+                    <FaInstagram className="w-5 h-5 cursor-pointer hover:text-gray-200"/>
+                    <FaGithub className="w-5 h-5 cursor-pointer hover:text-gray-200"/>
+                    <FaLinkedin className="w-5 h-5 cursor-pointer hover:text-gray-200"/>
+                    <FaYoutube className="w-5 h-5 cursor-pointer hover:text-gray-200"/>
                 </div>
-                <p className="mt-4 text-gray-500 text-xs">© {new Date().getFullYear()} TutorPlus. All rights reserved.</p>
+                <p className="mt-4 text-gray-500 text-xs">© {new Date().getFullYear()} TutorPlus. All rights
+                    reserved.</p>
             </div>
         </footer>
     );

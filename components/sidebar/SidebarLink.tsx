@@ -1,15 +1,15 @@
 'use client';
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import {usePathname, useSearchParams} from "next/navigation";
+import {useEffect, useState} from "react";
 
 type PropTypes = {
     title: string;
     url: string;
 };
 
-export default function SidebarLink({ title, url }: PropTypes) {
+export default function SidebarLink({title, url}: PropTypes) {
     const pathName = usePathname();
     const searchParams = useSearchParams();
     const [active, setActive] = useState(false);

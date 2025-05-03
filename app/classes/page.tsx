@@ -1,5 +1,3 @@
-
-
 export default function ClassesPage() {
     return (
         <div className="min-h-screen">
