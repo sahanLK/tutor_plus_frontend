@@ -1,56 +1,107 @@
+'use client';
+
 import styles from "./page.module.css";
 import SignInWithOAuth from "@/components/auth/SignInWithOAuth";
+import React, {useState} from "react";
+import {useRouter} from "next/navigation";
+import {setLoggedIn} from "@/lib/store/authSlice";
+import {useDispatch} from "react-redux";
+import {setActiveRole} from "@/lib/store/UiConfigSlice";
+import {AxiosError} from "axios";
 
 export default function LoginPage() {
+    const dispatch = useDispatch();
+    const [formData, setFormData] = useState({email: "", password: ""});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const router = useRouter();
+
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({...formData, [e.target.name]: e.target.value});
+    }
+
+    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+
+        try {
+            const response = await fetch('http://localhost:8000/users/login/', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            if (!response.ok) {
+                throw new Error("Invalid Credentials");
+            }
+
+            const data = await response.json();
+            dispatch(setActiveRole({activeRole: data.active_role}));
+            dispatch(setLoggedIn({access_token: data.access_token}));
+            router.push('/dashboard');
+            console.log("Login Success: Latest Acces token: ", data.access_token);
+
+        } catch (err) {
+            const error = err as AxiosError;
+            console.log("Error notice");
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    function handleSignInWithOAuth(provider: string) {
+        let url: string;
+        if (provider == 'google') {
+            url = 'http://localhost:8000/auth/google/redirect';
+        } else {
+            url = 'http://localhost:8000/auth/linkedin/redirect';
+        }
+        window.location.href = url;
+    }
+
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-100">
-            <div className="w-full max-w-md bg-white p-8 shadow-lg rounded-lg">
-                <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
+        <div className="w-full max-w-md bg-white mx-auto my-16 p-8 shadow-lg rounded-lg">
+            <h2 className="text-2xl font-bold text-center mb-10">Sign In</h2>
 
-                <form className="space-y-4 mb-8">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Enter your email"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
+            {error !== '' ? <>{error}</> : ''}
 
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
+            <form className="space-y-3 mb-8" onSubmit={handleSubmit}>
+                <label className="block text-sm font-semibold text-gray-600 mb-1">Email*</label>
+                <input
+                    type="email"
+                    placeholder="Enter Email"
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                />
+                <label className="block text-sm font-semibold text-gray-600 mb-1">Password*</label>
+                <input
+                    type="password"
+                    placeholder="Enter Password"
+                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                />
 
-                    <button
-                        type="submit"
-                        className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                    >
-                        Sign In
-                    </button>
-                </form>
+                <button
+                    type="submit"
+                    className={`${loading ? 'bg-gray-300' : 'bg-blue-600 hover:bg-blue-700'} w-full py-2 mt-4 mb-2 text-white transition rounded-sm cursor-pointer `}
+                    disabled={loading}
+                >Sign In
+                </button>
+            </form>
 
-                <div className={`${styles.separator} mb-6`}>
-                    <span className="font-light text-xs">OR</span>
-                </div>
-
-                <div className="">
-                    <SignInWithOAuth title="Continue with Google" provider="google" />
-                    <SignInWithOAuth title="Continue with Linkedin" provider="linkedin" />
-                </div>
-            </div>
+            <div className={`${styles.separator} mb-6`}><span className="font-light text-xs">OR</span></div>
+            <SignInWithOAuth title="Continue with Google" provider="google"
+                             redirect={() => handleSignInWithOAuth('google')}/>
+            <SignInWithOAuth title="Continue with Linkedin" provider="linkedin"
+                             redirect={() => handleSignInWithOAuth('linkedin')}/>
         </div>
     );
 }
