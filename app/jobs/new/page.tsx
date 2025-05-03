@@ -26,11 +26,7 @@ export default function CreateJobPage() {
 
         try {
             const resp = await api.post('/posts/', submitData);
-            const data = await resp.data;
-            
-            if (resp.status == 201) {
-                alert(`Post Created: ${data.post.id}`);
-            }
+            console.log(resp.data);
         } catch (err) {
             const error = err as AxiosError;
             console.log(error.message);

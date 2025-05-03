@@ -18,10 +18,9 @@ export default function TokenRefresher({children} : {children: ReactNode}) {
             try {
                 const {data} = await axios.get('http://localhost:8000/users/refresh-token', {withCredentials: true});
                 dispatch(setLoggedIn({access_token: data.access_token}));
-                
             } catch (err) {
                 dispatch(setLoggedOut());
-                router.push('/auth/login');
+                // router.push('/auth/login');
                 const error = err as AxiosError;
                 console.log(error.message);
             } finally {
