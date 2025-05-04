@@ -77,7 +77,7 @@ const RegisterPage = () => {
         if (formError) return;
         formData.default_role = formData.default_role.toLowerCase();
 
-        fetch('http://localhost:8000/users/register', {
+        fetch('http://tplus_api:8000/users/register', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData)
