@@ -1,6 +1,6 @@
 FROM node:22.14 AS builder
 
-WORKDIR /app
+WORKDIR /app/frontend
 
 COPY package*.json ./
 RUN npm install
@@ -11,7 +11,7 @@ RUN npm run build
 
 FROM node:22.14-alpine AS runner
 
-WORKDIR /app
+WORKDIR /app/frontend
 
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/.next .next
