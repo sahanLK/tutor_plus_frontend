@@ -26,7 +26,7 @@ export default function LoginPage() {
         setError('');
 
         try {
-            const response = await fetch('/api/users/login/', {
+            const response = await fetch('/api/users/login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
