@@ -1,8 +1,8 @@
 'use client';
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from "@/app/auth/login/page.module.css";
 import SignInWithOAuth from "@/components/auth/SignInWithOAuth";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 const RegisterPage = () => {
@@ -20,13 +20,13 @@ const RegisterPage = () => {
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({...formData, [e.target.name]: e.target.value});
+        setFormData({ ...formData, [e.target.name]: e.target.value });
         console.log(formData);
     };
 
     function handleRoleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setFormData(prev => {
-            const updated = {...prev, default_role: e.target.value};
+            const updated = { ...prev, default_role: e.target.value };
             console.log("New state:", updated);
             return updated;
         });
@@ -77,9 +77,33 @@ const RegisterPage = () => {
         if (formError) return;
         formData.default_role = formData.default_role.toLowerCase();
 
-        fetch('http://localhost:8000/users/register', {
+        fetch('http://tplus_api:8000/users/register', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data);
+                router.push('/auth/login');
+            })
+            .catch(err => console.log(err))
+
+        fetch('http://tplus_api/users/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data);
+                router.push('/auth/login');
+            })
+            .catch(err => console.log(err))
+
+        fetch('/api/users/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
         })
             .then(resp => resp.json())
@@ -208,9 +232,9 @@ const RegisterPage = () => {
             </div>
 
             <SignInWithOAuth title="Continue with Google" provider="google"
-                             redirect={() => handleSignInWithOAuth('google')}/>
+                redirect={() => handleSignInWithOAuth('google')} />
             <SignInWithOAuth title="Continue with Linkedin" provider="linkedin"
-                             redirect={() => handleSignInWithOAuth('linkedin')}/>
+                redirect={() => handleSignInWithOAuth('linkedin')} />
         </div>
     );
 };
