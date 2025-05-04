@@ -16,7 +16,7 @@ export default function TokenRefresher({children}: { children: ReactNode }) {
     useEffect(() => {
         async function refreshToken() {
             try {
-                const {data} = await axios.get('http://localhost:8000/users/refresh-token', {withCredentials: true});
+                const {data} = await axios.get('/api/users/refresh-token', {withCredentials: true});
                 dispatch(setLoggedIn({access_token: data.access_token}));
             } catch (err) {
                 dispatch(setLoggedOut());

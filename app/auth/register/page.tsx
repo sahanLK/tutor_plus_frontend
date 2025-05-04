@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from "react";
 import styles from "@/app/auth/login/page.module.css";
 import SignInWithOAuth from "@/components/auth/SignInWithOAuth";
@@ -76,30 +77,6 @@ const RegisterPage = () => {
 
         if (formError) return;
         formData.default_role = formData.default_role.toLowerCase();
-
-        fetch('http://tplus_api:8000/users/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                console.log(data);
-                router.push('/auth/login');
-            })
-            .catch(err => console.log(err))
-
-        fetch('http://tplus_api/users/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                console.log(data);
-                router.push('/auth/login');
-            })
-            .catch(err => console.log(err))
 
         fetch('/api/users/register', {
             method: 'POST',
