@@ -2,7 +2,7 @@ version: '3'
 
 services:
   
-  tutor_plus_frontend:
+  tplus_frontend:
     container_name: tplus_frontend
 #    build: ./
     image: ghcr.io/sahanlk/tutor_plus_frontend:${IMAGE_TAG}
