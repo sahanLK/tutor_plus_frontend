@@ -14,4 +14,4 @@ services:
 
 networks:
   tplus_network:
-    driver: bridge
+    external: true
