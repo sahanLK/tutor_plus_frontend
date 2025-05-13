@@ -9,6 +9,7 @@ import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {useRouter} from "next/navigation";
 import {RootState} from "@/lib/store/store";
+import Link from "next/link";
 
 
 const HomePage = () => {
@@ -28,27 +29,28 @@ const HomePage = () => {
 
     return (
         <div>
-            <section className={`${styles.headerHome} h-screen`}>
-                <div className="container mx-auto px-10 py-5 flex items-center h-screen">
+            <section className={`${styles.headerHome} min-h-screen`}>
+                <div className="container mx-auto px-10 py-5 flex items-center">
                     <div className="grid grid-cols-2 mb-50">
-                        <div className="my-auto">
+                        <div className="my-auto mt-50">
                             <h2 className="text-6xl font-bold space-y-3 text-stone-700 tracking-sm leading-tight">
                                 Top <span className="text-yellow-600">Instructors</span> From<br/> All Around the World.
                             </h2>
-                            <p className="mt-8 mb-16 leading-7 text-stone-600">
-                                Connecting Teachers and Students from all around the world, while integrating, <br/>
-                                everything you need for a seamless online Tutoring and Learning experience.
+                            <p className="mt-8 mb-16 leading-7 text-stone-100">
+                                Seamlessly connecting Teachers and Students from all around the world.
                             </p>
-                            <a className="bg-blue-800 px-6 py-4 text-white tracking-wide">Get Started for Free</a>
+                            
+                            <Link href="/auth/register" className="bg-blue-800 px-6 py-4 text-white tracking-wide mr-5">Find Tutor Jobs</Link>
+                            <Link href="/auth/register" className="bg-blue-800 px-6 py-4 text-white tracking-wide">Find a Teacher</Link>
                         </div>
-                        <div className="mx-au">
+                        {/* <div className="mx-au">
                             <Image src={bannerImg} alt="bannner" className="h-auto" aria-hidden={true}/>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
 
-            <section className="container mx-auto bg-gray-100 border-t-1 py-18 border-gray-300">
+            <section className="container mx-auto bg-gray-100 border-t-1 py-10 border-gray-300">
                 <div className="grid grid-cols-2 py-10">
                     <div className="ml-auto px-16">
                         <Image src={boy} alt="boy"/>
@@ -66,8 +68,8 @@ const HomePage = () => {
                 </div>
             </section>
 
-            <section className="container mx-auto bg-gray-100 my-10 rounded-lg">
-                <h2 className="text-3xl font-bold text-stone-700 mt-10 mb-8">Featured Courses</h2>
+            <section className="container mx-auto bg-gray-100 my-10 rounded-lg border-t-1 py-10 border-gray-300">
+                <h2 className="text-3xl font-bold text-stone-700 mb-8">Featured Courses</h2>
                 <div className="flex gap-5 flex-wrap gap-y-10 mb-10">
                     <Course/>
                     <Course/>

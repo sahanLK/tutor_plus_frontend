@@ -13,7 +13,6 @@ export default function AuthGuard<P extends IntrinsicAttributes>(Component: Comp
         // const router = useRouter();
         const [shouldRender, setShouldRender] = useState(false);
 
-
         useEffect(() => {
             if (!loggedIn) {
                 console.log("User not logged in: ", loggedIn);

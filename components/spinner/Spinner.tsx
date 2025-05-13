@@ -1,9 +1,11 @@
-// components/LoadingSpinner.tsx
 
-export default function Spinner() {
+type PropTypes = { size: number, color: string }
+
+
+export default function Spinner({ size = 8, color = 'white' }: PropTypes) {
     return (
         <div className="flex items-center justify-center h-full w-full">
-            <div className="h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className={`h-${size} w-${size} border-2 border-${color} border-t-transparent rounded-full animate-spin`}></div>
         </div>
     );
 }

@@ -1,3 +1,4 @@
 .headerHome {
-    background-image: url("https://ifingerstudio.com/eduvalt/wp-content/uploads/2023/07/banner_bg.jpg");
+    background-image: url("/homepage/banner.png");
+    background-size: cover;
 }

@@ -1,4 +1,4 @@
-// Jenkinsfile for TutorPlus frontend demo deployment
+// TutorPlus frontend demo deployment. Non-Persistent
 
 pipeline {
     agent any

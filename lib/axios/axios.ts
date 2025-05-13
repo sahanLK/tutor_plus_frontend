@@ -3,13 +3,13 @@
 import axios, {AxiosError} from 'axios';
 import {setLoggedIn, setLoggedOut} from '../store/authSlice';
 import {store} from '../store/store';
+import { API_ROOT } from '@/config';
 
 
 const api = axios.create({
-    baseURL: '/api',
+    baseURL: `${API_ROOT}/api`,
     withCredentials: true,
 });
-
 
 api.interceptors.request.use(
     (config) => {
@@ -25,7 +25,6 @@ api.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
 
 api.interceptors.response.use(
     response => response,
