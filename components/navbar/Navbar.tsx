@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "@/public/cover.png";
+import Logo from "@/public/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/store/store";
 import { FaRegBell } from "react-icons/fa";
@@ -78,15 +78,18 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-8 tracking-normal text-stone-800">
-                        {activeRole == 'teacher' ? (
+                        {/* <span className="mr-20 py-2 my-auto px-5 flex items-center cursor-pointer">
+                            Explore <ChevronDown className="pl-2" />
+                        </span> */}
+                        {/* {activeRole == 'teacher' ? (
                             <Link href="/jobs" className="mr-20 py-2 my-auto px-5 border-1 bg-white text-sm border-stone-400">
                                 Find Jobs
                             </Link>
                         ) : (
-                            <Link href="/jobs/new" className="mr-20 py-2 my-auto px-5 bg-blue-700 rounded text-white">Post
-                                a Job
+                            <Link href="/jobs/new" className="mr-20 py-2 my-auto px-5 bg-blue-700 rounded text-white">
+                                Post a Job
                             </Link>
-                        )}
+                        )} */}
 
                         {loggedIn ? (
                             <>

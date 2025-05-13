@@ -2,8 +2,8 @@
 
 import styles from "./page.module.css";
 import Image from "next/image";
-import bannerImg from "@/public/homepage/banner.png";
-import boy from "@/public/homepage/boy.png";
+// import bannerImg from "@/public/homepage/banner.png";
+// import boy from "@/public/homepage/boy.png";
 import Course from "@/components/courses/Course";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
@@ -33,8 +33,8 @@ const HomePage = () => {
                 <div className="container mx-auto px-10 py-5 flex items-center">
                     <div className="grid grid-cols-2 mb-50">
                         <div className="my-auto mt-50">
-                            <h2 className="text-6xl font-bold space-y-3 text-stone-700 tracking-sm leading-tight">
-                                Top <span className="text-yellow-600">Instructors</span> From<br/> All Around the World.
+                            <h2 className="lg:text-6xl md:text-5xl font-bold space-y-3 text-stone-700 tracking-sm leading-tight">
+                                Top <span className="text-yellow-600">Instructors</span> From All Around the World.
                             </h2>
                             <p className="mt-8 mb-16 leading-7 text-stone-100">
                                 Seamlessly connecting Teachers and Students from all around the world.
@@ -53,7 +53,7 @@ const HomePage = () => {
             <section className="container mx-auto bg-gray-100 border-t-1 py-10 border-gray-300">
                 <div className="grid grid-cols-2 py-10">
                     <div className="ml-auto px-16">
-                        <Image src={boy} alt="boy"/>
+                        {/* <Image src={boy} alt="boy"/> */}
                     </div>
                     <div className="">
                         <label className="text-blue-600 bg-blue-100 text-sm px-4 py-2">Looking for a Tutor?</label>
