@@ -10,7 +10,7 @@ import SidebarLink from "./SidebarLink";
 
 export default function SidebarRoot() {
     return (
-        <div className="col-span-2 px-4 pt-10 bg-gray-60 shadow pl-6 bg-[#405189] text-white">
+        <>
             <SidebarItem title="Dashboard" Icon={RxDashboard} iconSize={16}>
                 <SidebarLink title="Summary" url="/dashboard"/>
                 <SidebarLink title="Analytics" url="/dashboard?section=analytics"/>
@@ -51,6 +51,6 @@ export default function SidebarRoot() {
                     <li className="pl-8 my-5">-&emsp;All</li>
                 </Link>
             </SidebarItem>
-        </div>
+        </>
     )
 }

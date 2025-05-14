@@ -44,7 +44,9 @@ const DashBoard: React.FC = () => {
     return (
         <div className="grid grid-cols-13 min-h-screen">
             {/* Sidebar */}
-            <Sidebar />
+            <div className="col-span-2 bg-[#004d80] text-stone-200 px-4">
+                <Sidebar />
+            </div>
 
             {/* Page */}
             <div className="col-span-11 px-7 py-5">
