@@ -9,14 +9,6 @@ import SidebarLink from "./SidebarLink";
 
 
 export default function SidebarRoot() {
-    // const activeRole = useSelector((state: RootState) => state.config.activeRole);
-
-    // return activeRole == 'student' ? <SidebarStudent /> : <SidebarTutor />;
-
-    // function handleDropdown(e: React.MouseEvent<HTMLSpanElement>) {
-    //     console.log(e);
-    // }
-
     return (
         <div className="col-span-2 px-4 pt-10 bg-gray-60 shadow pl-6 bg-[#405189] text-white">
             <SidebarItem title="Dashboard" Icon={RxDashboard} iconSize={16}>

@@ -16,7 +16,7 @@ import { AxiosError } from "axios";
 import { setActiveRole } from "@/lib/store/UiConfigSlice";
 import { useRouter } from "next/navigation";
 import { GiTeacher } from "react-icons/gi";
-import { PiStudentBold } from "react-icons/pi";
+import { PiStudentBold, PiWarningCircle } from "react-icons/pi";
 import { setLoggedOut } from "@/lib/store/authSlice";
 import api from "@/lib/axios/axios";
 
@@ -48,6 +48,10 @@ const Navbar = () => {
     }, []);
 
     async function toggleActiveRole() {
+        if (activeRole === 'unknown') {
+            router.push("/profile/settings");
+            return;
+        };
         const newRole = (activeRole === "student") ? 'teacher' : 'student';
 
         try {
@@ -123,7 +127,7 @@ const Navbar = () => {
                             <hr className="text-stone-300 my-2" />
 
                             <li>
-                                <Link href="/profile" className="flex items-center px-4 py-2 hover:bg-gray-100">
+                                <Link href="/profile/settings" className="flex items-center px-4 py-2 hover:bg-gray-100">
                                     <IoSettingsOutline className="mr-3" size="18" />
                                     <span className="text-sm">Settings</span>
                                 </Link>
@@ -139,17 +143,9 @@ const Navbar = () => {
                             <li className="mt-5 mb-1">
                                 <button onClick={toggleActiveRole}
                                     className="flex w-full items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                                    {activeRole === 'teacher' ? (
-                                        <>
-                                            <PiStudentBold className="mr-3" size="18" />
-                                            <span className="text-sm">Student Profile</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <GiTeacher className="mr-3" size="18" />
-                                            <span className="text-sm">Teacher Profile</span>
-                                        </>
-                                    )}
+                                    {activeRole === 'teacher' ? <><PiStudentBold className="mr-3" size="18" /><span className="text-sm">Student Profile</span></> : null}
+                                    {activeRole === 'student' ? <><GiTeacher className="mr-3" size="18" /><span className="text-sm">Teacher Profile</span></> : null}
+                                    {activeRole === 'unknown' ? <><PiWarningCircle className="mr-3 text-red-600" size="18" /><span className="text-sm text-red-400">Complete Your Profile</span></> : null}
                                 </button>
                             </li>
                         </ul>

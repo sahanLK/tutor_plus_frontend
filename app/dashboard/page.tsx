@@ -20,9 +20,6 @@ const DashBoard: React.FC = () => {
     const [notifications, setNotifications] = useState<{ id: number, message: string }[]>([]);
     const [loading, setLoading] = useState(false);
 
-    // const [user, setUser] = useState({});
-    // const router = useRouter();
-    // const activeRole = useSelector((state: RootState) => state.config.activeRole);
     useEffect(() => {
         async function fetchNotifications() {
             setLoading(true);

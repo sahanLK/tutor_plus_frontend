@@ -12,7 +12,8 @@ type ProfileDetailsType = {
     id: number,
     first_name: string,
     last_name: string,
-    email: string
+    email: string,
+    profile_image: string,
 }
 
 export default function TeacherProfile() {
@@ -28,6 +29,7 @@ export default function TeacherProfile() {
 
                 if (resp.status === 200) {
                     const data = await resp.data;
+                    console.log(data);
                     setProfileDetails(data);
                 }
             } catch (err) {
@@ -46,16 +48,18 @@ export default function TeacherProfile() {
     if (error) return "Error fetching profile";
 
     return (
-        <div className="max-w-7xl mx-auto my-10 min-h-screen">
+        <div className="max-w-7xl mx-auto my-10 min-h-screen px-5">
             {/* Profile Header */}
-            <div className="profile-header grid grid-cols-2">
-                <div className="px-20 ml-30">
-                    <Image src="/avatar.png" alt="profile-pic" width={200} height={200} className="rounded-full" />
+            <div className="profile-header grid grid-cols-1 md:grid-cols-3">
+                <div className="mx-auto col-span-1">
+                    <Image src={profileDetails?.profile_image || '/avatar.png'} alt="profile-pic" width={200} height={200} className="rounded-full" />
                 </div>
-                <div>
-                    <h2 className="text-xl text-stone-600">{profileDetails?.first_name}&nbsp;{profileDetails?.last_name}</h2>
-                    <p>Software Engineer</p>
-                    <span>{profileDetails?.email}</span>
+                <div className="mx-auto md:mx-0 flex items-center col-span-2 text-center md:text-left pt-5 md:pt-0">
+                    <div>
+                        <h2 className="text-3xl text-stone-600">{profileDetails?.first_name}&nbsp;{profileDetails?.last_name}</h2>
+                        <p>Software Engineer</p>
+                        <span>{profileDetails?.email}</span>
+                    </div>
                 </div>
             </div>
 

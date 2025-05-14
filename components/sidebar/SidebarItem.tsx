@@ -29,7 +29,7 @@ export default function SidebarItem({title, Icon, iconSize, children}: PropTypes
         }
 
         expandIfCurrentUrl();
-    }, [pathName, childrenArray]);
+    }, []);
 
     function handleExpansion(e: React.MouseEvent<HTMLElement>) {
         e.stopPropagation();

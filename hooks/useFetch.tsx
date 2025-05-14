@@ -1,5 +1,6 @@
 'use client';
 
+import Loading from "@/app/loading";
 import { useEffect, useState } from "react";
 
 
@@ -27,4 +28,8 @@ function useFetch(url: string) {
             }
         }
     });
+
+    return {data, error, loading};
 }
+
+export default useFetch;
