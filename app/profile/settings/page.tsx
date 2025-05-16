@@ -1,39 +1,44 @@
 'use client'
 
-import useFetch from '@/hooks/useFetch';
+import useApi from '@/hooks/useApi';
 import api from '@/lib/axios/axios';
+import { RootState } from '@/lib/store/store';
 import { setActiveRole } from '@/lib/store/UiConfigSlice';
 import { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { CiCamera } from 'react-icons/ci';
+import { useSelector } from 'react-redux';
 
 type ProfileDataType = {
-    first_name: string,
-    last_name: string,
-    age: number,
-    email: string,
-    primary_role: "Student" | "Teacher" | "Unknown"
-    // profile_image: File,
+    first_name: string | null,
+    last_name: string | null,
+    age: number | null,
+    email: string | null,
+    primary_role: "student" | "teacher" | "unknown",
 }
 
-type ResponseType = {
-    data: ProfileDataType,
-    error: AxiosError,
-    loading: boolean,
-}
+type Role = "student" | "teacher" | "unknown";
+const roles: Role[] = ["student", "teacher"];
 
 
 export default function ProfileSettings() {
+    const currentActiveRole = useSelector((state: RootState) => state.config.activeRole);
     const [profileImage, setProfileImage] = useState<File | null>();
-    const { data, error, loading } = useFetch<ProfileDataType>('http://localhost:8000/api/users/account-details');
-    const [profileData, setProfileData] = useState({
-        first_name: data?.first_name,
-        last_name: data?.last_name,
-        age: data?.age,
-        email: data?.email,
-        primary_role: data?.primary_role,
-        // profile_image: 
-    });
+    const { response, error, loading } = useApi<ProfileDataType>('http://localhost:8000/api/users/account-details');
+    const [profileData, setProfileData] = useState<ProfileDataType | null>(null);
+    console.log(profileData);
+
+    useEffect(() => {
+        if (response) {
+            setProfileData({
+                first_name: response.first_name,
+                last_name: response.last_name,
+                age: response.age,
+                email: response.email,
+                primary_role: response.primary_role || currentActiveRole,
+            });
+        }
+    }, [response, currentActiveRole]);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -44,26 +49,28 @@ export default function ProfileSettings() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        
-        const resp = await api.get(`/users/change-role?role=${profileData.primary_role?.toLowerCase()}`);
+
+        const resp = await api.get(`/users/change-role?role=${profileData?.primary_role}`);
         if (resp.status == 200) {
-            setActiveRole({activeRole: profileData?.primary_role?.toLocaleLowerCase()});
+            setActiveRole({ activeRole: profileData?.primary_role || currentActiveRole });
         }
-        
-        console.log(resp.status);
     }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        if (!profileData) return;
         setProfileData({ ...profileData, [e.target.name]: e.target.value });
     }
 
-    function handleRoleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        setProfileData(prev => {
-            const updated = { ...prev, primary_role: e.target.value };
-            return updated;
-        });
+    function isValidRole(value: string): value is Role {
+        return ["student", "teacher", "unknown"].includes(value);
     }
-    
+
+    function handleRoleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        const value = e.target.value;
+        if (!profileData || !isValidRole(value)) return;
+        setProfileData({ ...profileData, primary_role: value });
+    }
+
     return (
         <div className='min-h-screen'>
             <div className="container mx-auto p-6 bg-white shadow rounded-lg mt-10">
@@ -100,7 +107,7 @@ export default function ProfileSettings() {
                             <input
                                 type="text"
                                 name="first_name"
-                                value={data?.first_name}
+                                value={profileData?.first_name ? profileData.first_name : ''}
                                 onChange={handleChange}
                                 className="mt-1 block w-[300px] border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
                                 required
@@ -111,7 +118,7 @@ export default function ProfileSettings() {
                             <input
                                 type="text"
                                 name="last_name"
-                                value={data?.last_name}
+                                value={profileData?.last_name ? profileData.last_name : ''}
                                 onChange={handleChange}
                                 className="mt-1 block w-[300px] border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
                                 required
@@ -125,7 +132,7 @@ export default function ProfileSettings() {
                         <input
                             type="email"
                             name="email"
-                            value={data?.email}
+                            value={profileData?.email ? profileData.email : ''}
                             onChange={handleChange}
                             className="mt-1 block w-full min-w-[300px] max-w-[500px] border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
                             required
@@ -135,22 +142,20 @@ export default function ProfileSettings() {
                     <div className='flex items-center gap-x-10'>
                         <label className="block text-sm font-medium text-gray-600">Primary Role</label>
                         <select
-                            value={profileData?.primary_role ? profileData?.primary_role : 'Select'}
+                            value={profileData?.primary_role}
                             onChange={handleRoleChange}
                             className="py-2 px-4 border-1 border-stone-400 text-stone-700 rounded"
                         >
                             <option value="Select">Select</option>
-                            <option value="Student">Student</option>
-                            <option value="Teacher">Teacher</option>
+                            {roles.map(role => (
+                                <option key={role} value={role}>{role}</option>
+                            ))}
                         </select>
                     </div>
 
                     {/* Save Button */}
                     <div className='mt-12'>
-                        <button
-                            type="submit"
-                            className="w-full md:max-w-[250px] bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
-                        >
+                        <button type="submit" className="w-full md:max-w-[250px] bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
                             Save Changes
                         </button>
                     </div>

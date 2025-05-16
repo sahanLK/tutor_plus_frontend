@@ -5,7 +5,7 @@ import {AxiosError} from "axios";
 import {X} from "lucide-react";
 import React, {useState} from "react";
 
-const options = ["Python", "Java", "React", "Spring Boot", "C++", "JavaScript"]
+const options = ["Python", "Java", "React", "Spring Boot", "C++", "JavaScript"];
 
 export default function CreateJobPage() {
     const [filtered, setFiltered] = useState<Set<string>>(new Set());
