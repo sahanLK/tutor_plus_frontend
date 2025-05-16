@@ -1,31 +1,35 @@
-// const colors = require('tailwindcss/colors')
+import type { Config } from 'tailwindcss'
+import colors from 'tailwindcss/colors'
 
-module.exports = {
-    theme: {
-        // colors: {
-        //     gray: colors.coolGray,
-        //     blue: colors.lightBlue,
-        //     red: colors.rose,
-        //     pink: colors.fuchsia,
-        // },
-        
-        extend: {
-            fontFamily: {
-                poppins: ['Poppins', 'sans-serif'],
-            },
-            // spacing: {
-            //     '128': '32rem',
-            //     '144': '36rem',
-            // },
-            // borderRadius: {
-            //     '4xl': '2rem',
-            // }
-        }
+const config: Config = {
+  content: [
+    './app/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        red: colors.rose,
+        pink: colors.fuchsia,
+        testpink: '#ff69b4',
+      },
+      spacing: {
+        '128': '32rem',
+        '144': '36rem',
+      },
+      borderRadius: {
+        '4xl': '2rem',
+      },
+      fontFamily: {
+        sans: ['Graphik', 'sans-serif'],
+        serif: ['Merriweather', 'serif'],
+        inter: ['var(--font-inter)'],
+        hankens: ['var(--font-hankens)'],
+        poppins: ['var(--font-poppins)'],
+      },
     },
-    variants: {
-        extend: {
-            borderColor: ['focus-visible'],
-            opacity: ['disabled'],
-        }
-    }
+  },
+  plugins: [],
 }
+
+export default config

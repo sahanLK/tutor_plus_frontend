@@ -2,16 +2,14 @@
 
 import AuthGuard from "@/components/AuthGuard";
 import Sidebar from "@/components/sidebar/SidebarRoot";
-// import {RootState} from "@/lib/store/store";
 import { useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
-// import {useSelector} from "react-redux";
 import Spinner from "@/components/spinner/Spinner";
-import DashboardAnalytics from "./DashboardAnalytics";
 import DashBoardSummary from "./DashbordSummary";
 import api from "@/lib/axios/axios";
 import { AxiosError } from "axios";
 import { X } from "lucide-react";
+import { getFormattedDate } from "@/utils";
 
 
 const DashBoard: React.FC = () => {
@@ -19,6 +17,8 @@ const DashBoard: React.FC = () => {
     const dashboardContent = searchParams.get('section');
     const [notifications, setNotifications] = useState<{ id: number, message: string }[]>([]);
     const [loading, setLoading] = useState(false);
+    const formattedDate = getFormattedDate();
+
 
     useEffect(() => {
         async function fetchNotifications() {
@@ -42,14 +42,14 @@ const DashBoard: React.FC = () => {
     }
 
     return (
-        <div className="grid grid-cols-13 min-h-screen">
+        <div className="grid grid-cols-15 min-h-screen">
             {/* Sidebar */}
-            <div className="col-span-2 bg-[#004d80] text-stone-200 px-4">
+            <div className="col-span-2 bg-[#405189] text-stone-200 pl-6 pr-4 py-8 shadow-xl font-hankens">
                 <Sidebar />
             </div>
 
             {/* Page */}
-            <div className="col-span-11 px-7 py-5">
+            <div className="col-span-13 px-7 py-5">
                 {notifications.length > 0 && (
                     <div className="w-full mb-10 ">
                         {notifications.map((notification) => (
@@ -62,11 +62,13 @@ const DashBoard: React.FC = () => {
                     </div>
                 )}
 
-                <h2 className="text-md">Good Morning, Sahan!</h2>
-                <p className="text-sm text-stone-500 mt-1">Here&#39;s what&#39;s happening today.</p>
+                <div className="col-span-10">
+                    <h2 className="text-md">Good Morning, Sahan!</h2>
+                    <p className="text-sm text-stone-500 mt-1">{formattedDate}</p>
+                </div>
 
                 <Suspense fallback={<Spinner size={0} color={""} />}>
-                    {dashboardContent == 'analytics' ? <DashboardAnalytics /> : <DashBoardSummary />}
+                    <DashBoardSummary />
                 </Suspense>
             </div>
         </div>

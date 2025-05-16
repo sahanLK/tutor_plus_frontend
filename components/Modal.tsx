@@ -13,6 +13,11 @@ type PropTypes = {
 export default function Modal({ open = false, title, children, onClose, closeBtnText = 'Close', submitBtnText = 'Submit', onSubmit }: PropTypes) {
     if (!open) return null;
 
+    function handleSubmit() {
+        onSubmit();
+        onClose(false);
+    }
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             {/* Overlay */}
@@ -29,7 +34,7 @@ export default function Modal({ open = false, title, children, onClose, closeBtn
                         <button className="px-4 py-2 cursor-pointer"
                             onClick={() => onClose(false)}>{closeBtnText}</button>
                         <button className="px-4 py-2 bg-blue-700 text-white rounded cursor-pointer"
-                            onClick={onSubmit}>{submitBtnText}</button>
+                            onClick={handleSubmit}>{submitBtnText}</button>
                     </div>
                 </div>
             </div>

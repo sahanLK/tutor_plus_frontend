@@ -55,10 +55,10 @@ export default function TeacherProfile() {
                     <Image src={profileDetails?.profile_image || '/avatar.png'} alt="profile-pic" width={200} height={200} className="rounded-full" />
                 </div>
                 <div className="mx-auto md:mx-0 flex items-center col-span-2 text-center md:text-left pt-5 md:pt-0">
-                    <div>
-                        <h2 className="text-3xl text-stone-600">{profileDetails?.first_name}&nbsp;{profileDetails?.last_name}</h2>
+                    <div className="text-stone-600 ">
+                        <h2 className="text-3xl mb-3">{profileDetails?.first_name}&nbsp;{profileDetails?.last_name}</h2>
                         <p>Software Engineer</p>
-                        <span>{profileDetails?.email}</span>
+                        
                     </div>
                 </div>
             </div>

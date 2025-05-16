@@ -23,6 +23,7 @@ export default function CreateJobPage() {
     async function handleSubmit(e: React.ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
         const submitData = {...formData, subjects: Array.from(selected).map(item => ({name: item}))};
+        console.log(submitData);
 
         try {
             const resp = await api.post('/posts/', submitData);

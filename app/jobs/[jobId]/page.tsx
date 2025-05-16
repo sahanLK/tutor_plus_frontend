@@ -66,8 +66,8 @@ export default function JobPostDetails({ params }: PageProps) {
             console.log("Applying for the Job with: ", requestBody);
             const resp = await api.post(`/posts/apply/${post.id}`, requestBody);
 
-            if (resp.status === 200) {
-                console.log("Job application successful");
+            if (resp.status === 201) {
+                setPost({...post, applied: true});
             }
         } catch (err) {
             const error = err as AxiosError;
@@ -94,44 +94,53 @@ export default function JobPostDetails({ params }: PageProps) {
                     />
                 </div>
             </Modal>
+
             <div className="container mx-auto min-h-screen mt-15 mb-20">
-                <div className="mb-10">
-                    <h2 className="text-3xl text-stone-700 mb-4">{post.title}</h2>
-                    <p className="text-stone-600">Posted By:&emsp;{post.owner.first_name} {post.owner.last_name}</p>
+                <div className="mb-5">
+                    <h2 className="text-2xl text-stone-700 mb-4">{post.title}</h2>
+                    <p className="text-stone-600 text-xs">
+                        <span className="text-stone-800 text-md">Posted By</span>:&nbsp;{post.owner.first_name} {post.owner.last_name},
+                        <span className="ml-5 text-stone-800 text-md">{post.job_applications.length}</span> Applicants
+                    </p>
+
                 </div>
 
-                {/* Subjects */}
-                {post.subjects.length > 0 && (
-                    <div className="my-10 flex flex-wrap items-center gap-4 text-stone-500">
-                        {post.subjects.map(subject => (
-                            <span className="py-1 px-4 bg-stone-200 border-1 border-stone-300 rounded"
-                                key={subject.id}>{subject.name}</span>
-                        ))}
-                    </div>
-                )}
-
                 <button
-                    className={`px-4 py-2 text-white rounded ${post.applied ? 'bg-gray-700' : 'bg-green-700 cursor-pointer'}`}
+                    className={`px-4 py-2 mt-2 text-white text-sm rounded ${post.applied ? 'bg-gray-600' : 'bg-blue-800 cursor-pointer'}`}
                     onClick={openModel}
                     disabled={post.applied}
                 >
-                    {post.applied ? 'Applied' : 'Apply'}
+                    {post.applied ? 'Applied' : 'Apply Job'}
                 </button>
 
                 <div className="mt-10">
-                    <div className="flex items-center gap-3 text-stone-700 mb-10 border-b-1 border-stone-300">
+                    <div className="flex items-center gap-3 text-stone-700 mb-6 my-10 border-b-1 border-stone-300">
                         <span
                             onClick={() => setActiveTab(1)}
-                            className={`py-2 px-5 border-stone-300 text-md cursor-pointer ${activeTab == 1 ? 'border-1 rounded-t-lg bg-blue-700 text-white' : ''}`}
+                            className={`py-2 mr-5 text-md text-stone-600 cursor-pointer ${activeTab == 1 ? 'text-stone-700 border-b-5 border-black' : ''}`}
                         >Summary</span>
                         <span
                             onClick={() => setActiveTab(2)}
-                            className={`py-2 px-5 border-stone-300 text-md cursor-pointer ${activeTab == 2 ? 'border-1 rounded-t-lg bg-blue-700 text-white' : ''}`}
+                            className={`py-2 mr-5 text-md text-stone-600 cursor-pointer ${activeTab == 2 ? 'text-stone-700 border-b-5 border-black' : ''}`}
                         >Applicants</span>
                     </div>
 
                     {activeTab == 1 && (
-                        post.content
+                        <>
+                            <span className="flex items-center text-sm">
+                                {/* Subjects */}
+                                {post.subjects.length > 0 && (
+                                    <div className="flex flex-wrap items-center gap-4 text-stone-500">
+                                        {post.subjects.map((subject, index) => (
+                                            <span className="py-1 px-4 text-md border-1 border-stone-600 text-stone-600 rounded-sm mr-3"
+                                                key={index}>{subject.name}</span>
+                                        ))}
+                                    </div>
+                                )}
+                            </span>
+                            <div className="mt-8 text-stone-700">{post.content}</div>
+                        </>
+
                     )}
 
                     {activeTab == 2 && (

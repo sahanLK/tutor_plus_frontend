@@ -13,7 +13,6 @@ export default function SidebarRoot() {
         <>
             <SidebarItem title="Dashboard" Icon={RxDashboard} iconSize={16}>
                 <SidebarLink title="Summary" url="/dashboard"/>
-                <SidebarLink title="Analytics" url="/dashboard?section=analytics"/>
             </SidebarItem>
 
             <SidebarItem title="Classes" Icon={SlPeople} iconSize={16}>
