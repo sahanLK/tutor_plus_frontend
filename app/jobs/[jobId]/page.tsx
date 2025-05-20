@@ -1,3 +1,5 @@
+// This page is only meant to be viewed by the Teachers as the jobPost details page.
+
 'use client';
 
 import api from "@/lib/axios/axios";
@@ -7,7 +9,7 @@ import { use, useEffect, useRef, useState } from "react";
 import avatar from "@/public/avatar.png";
 import Modal from "@/components/Modal";
 
-type PageProps = { params: Promise<{ jobId: string }> }
+type PageProps = { params: Promise<{ postId: string }> }
 type JobApplicationType = {
     id: number,
     description: string,
@@ -26,7 +28,7 @@ type PostType = {
 }
 
 export default function JobPostDetails({ params }: PageProps) {
-    const { jobId } = use(params);
+    const { postId } = use(params);
     const [activeTab, setActiveTab] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [post, setPost] = useState<PostType>({
@@ -44,7 +46,7 @@ export default function JobPostDetails({ params }: PageProps) {
     useEffect(() => {
         async function fetchPost() {
             try {
-                const { data } = await api.get(`/posts/${jobId}`);
+                const { data } = await api.get(`/posts/${postId}`);
                 setPost(data);
                 console.log(data)
             } catch (err) {

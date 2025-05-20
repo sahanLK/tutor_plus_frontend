@@ -1,5 +1,6 @@
 'use client';
 
+import Ratings from "@/components/ratings/Ratings";
 import Spinner from "@/components/spinner/Spinner";
 import { API_ROOT } from "@/config";
 import api from "@/lib/axios/axios";
@@ -17,6 +18,7 @@ type ProfileDetailsType = {
 }
 
 export default function TeacherProfile() {
+    const [selectedSection, setSelectedSection] = useState(1);
     const [profileDetails, setProfileDetails] = useState<ProfileDetailsType>();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -56,9 +58,9 @@ export default function TeacherProfile() {
                 </div>
                 <div className="mx-auto md:mx-0 flex items-center col-span-2 text-center md:text-left pt-5 md:pt-0">
                     <div className="text-stone-600 ">
-                        <h2 className="text-3xl mb-3">{profileDetails?.first_name}&nbsp;{profileDetails?.last_name}</h2>
-                        <p>Software Engineer</p>
-                        
+                        <h2 className="text-2xl mb-2">{profileDetails?.first_name}&nbsp;{profileDetails?.last_name}</h2>
+                        <p className="text-md mb-5">Software Engineer</p>
+                        <Ratings value={4} onChange={() => 4} totalStars={5} />
                     </div>
                 </div>
             </div>
@@ -66,14 +68,40 @@ export default function TeacherProfile() {
             {/* Profile Sections */}
             <div className="border-b-1 border-stone-300 mt-15">
                 <ul className="flex gap-x-10">
-                    <li>Reviews</li>
-                    <li>Subjects</li>
+                    <li className={`text-stone-800 cursor-pointer py-2 ${selectedSection === 1 ? 'text-stone-700 border-b-5 border-black' : ''}`} onClick={() => setSelectedSection(1)}>Summary</li>
+                    <li className={`text-stone-800 cursor-pointer py-2 ${selectedSection === 2 ? 'text-stone-700 border-b-5 border-black' : ''}`} onClick={() => setSelectedSection(2)}>Subjects</li>
+                    <li className={`text-stone-800 cursor-pointer py-2 ${selectedSection === 3 ? 'text-stone-700 border-b-5 border-black' : ''}`} onClick={() => setSelectedSection(3)}>Pricing</li>
+                    <li className={`text-stone-800 cursor-pointer py-2 ${selectedSection === 4 ? 'text-stone-700 border-b-5 border-black' : ''}`} onClick={() => setSelectedSection(4)}>Courses</li>
                 </ul>
             </div>
 
             {/* Section Data */}
-            <div>
-                <h2>Content</h2>
+            <div className="mt-7 text-stone-600">
+                {selectedSection == 1 && (
+                    <div>
+                        Hi, I'm a professional software developer with 3+ years of experience in the industry. I deliver solutions effectively 
+                        and reliably that lead companies reach.
+                    </div>
+                )}
+
+                {selectedSection == 2 && (
+                    <div>
+
+                    </div>
+                )}
+
+                {selectedSection == 3 && (
+                    <div>
+
+                    </div>
+                )}
+
+                {selectedSection == 4 && (
+                    <div>
+
+                    </div>
+                )}
+
             </div>
         </div>
     );

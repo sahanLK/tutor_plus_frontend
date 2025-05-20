@@ -32,14 +32,14 @@ export default function JobList() {
         fetchPosts();
     }, []);
 
-    if (loading) return <div className="min-h-100 mt-40"><Spinner size="12" color={""} /></div>;
+    if (loading) return <div className="min-h-100 mt-40"><Spinner size={12} color={""} /></div>;
 
     return (
         <>
             {jobs.map((job: JobType) => (
                 <div className="px-10 py-6 shadow flex items-center bg-white rounded-lg mb-5" key={job.id}>
                     <div>
-                        <Link href={`/jobs/${job.id}`}><h1 className="text-lg pb-3 underline">{job.title}</h1></Link>
+                        <Link href={`/posts/${job.id}`}><h1 className="text-lg pb-3 underline">{job.title}</h1></Link>
                         <p className="text-sm">{job.content}</p>
                     </div>
                     <div className="ml-auto">

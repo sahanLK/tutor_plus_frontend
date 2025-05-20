@@ -1,7 +1,10 @@
 'use client';
 
 import api from "@/lib/axios/axios";
-import { useEffect, useState } from "react";
+import { AxiosError } from "axios";
+import { useCallback, useEffect, useState } from "react";
+
+type HttpMethod = "GET" | "POST";
 
 /**
  * useApi - Generic API caller with Axios.
@@ -16,39 +19,62 @@ import { useEffect, useState } from "react";
  *   statusCode: number
  * }}
  */
-function useApi<T>(url: string): {
+
+function useApi<T, R>(url: string, method: HttpMethod = "GET", autoFetch: boolean = true, reqBody: R | null = null): {
     response: T | null;
     loading: boolean;
-    error: Error | string | null;
+    error: string | null;
     statusCode: number;
+    fetchData: (url?: string, postData?: R) => Promise<void>;
 } {
     const [response, setResponse] = useState<T | null>(null);
     const [statusCode, setStatusCode] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<Error | string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchData = useCallback(async (fetchUrl?: string, postData: R | null = null) => {
+        const targetUrl = fetchUrl || url;
+        const requestBody = postData || reqBody;
+        if (!targetUrl) return;
+
+        setLoading(true);
+        try {
+            let resp;
+            if (method == 'GET') {
+                resp = await api.get<T>(url);
+            }
+            if (method == 'POST') {
+                resp = await api.post<T>(url, requestBody);
+            }
+            if (!resp) return;
+
+            setResponse(resp.data);
+            setStatusCode(resp.status);
+            setError(null);
+        } catch (err: unknown) {
+            if (err && typeof err === "object" && "isAxiosError" in err) {
+                const axiosError = err as AxiosError;
+                setStatusCode(axiosError.response?.status || 0);
+                setError(axiosError.message);
+            } else if (err instanceof Error) {
+                setError(err.message);
+                setStatusCode(0);
+            } else {
+                setError(`Unknown error: ${err}`);
+                setStatusCode(0);
+            }
+        } finally {
+            setLoading(false);
+        }
+    }, [url])
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const resp = await api.get<T>(url);
-                setResponse(resp.data);
-                setStatusCode(resp.status);
-            } catch (err: unknown) {
-                if (err instanceof Error) {
-                    setError(err);
-                } else {
-                    setError(`Unknown error: ${err}`);
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
+        if (autoFetch && url) {
+            fetchData();
+        }
+    }, [url, autoFetch, fetchData]);
 
-        fetchData();
-    }, [url]);
-
-    return { response, error, loading, statusCode };
+    return { response, error, loading, statusCode, fetchData };
 }
 
 export default useApi;
